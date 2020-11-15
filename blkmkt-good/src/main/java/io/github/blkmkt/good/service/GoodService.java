@@ -1,5 +1,6 @@
 package io.github.blkmkt.good.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.common.utils.PageUtils;
 import io.github.blkmkt.good.entity.GoodEntity;
