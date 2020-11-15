@@ -10,7 +10,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>blkmkt-good</module>
+        <module>blkmkt-order</module>
+        <module>blkmkt-user</module>
         <module>renren-fast</module>
+        <module>renren-generator</module>
     </modules>
 
 
