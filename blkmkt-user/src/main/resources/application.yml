@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://8.130.27.242:3306/blkmkt_user?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://39.101.64.188:3306/blkmkt_user?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:
