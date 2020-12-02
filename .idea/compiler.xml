@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="blkmkt-captcha" />
+        <module name="blkmkt-common" />
+        <module name="blkmkt-good" />
+        <module name="blkmkt-order" />
+        <module name="blkmkt-user" />
+        <module name="renren-fast" />
+        <module name="renren-generator" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="blkmkt-captcha" options="-parameters" />
+      <module name="blkmkt-good" options="-parameters" />
+      <module name="blkmkt-order" options="-parameters" />
+      <module name="blkmkt-user" options="-parameters" />
+      <module name="renren-fast" options="-parameters" />
+      <module name="renren-generator" options="-parameters" />
+    </option>
+  </component>
+</project>
