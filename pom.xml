@@ -17,6 +17,16 @@
         <module>renren-fast</module>
         <module>renren-generator</module>
         <module>blkmkt-common</module>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+        <module>blkmkt-captcha</module>
+>>>>>>> 3294c30 (init)
+>>>>>>> d871f93 (feat:add captcha module)
+>>>>>>> 8c272a9 (feat:captcha module add)
     </modules>
 
 
