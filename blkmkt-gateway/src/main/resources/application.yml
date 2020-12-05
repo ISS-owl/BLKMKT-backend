@@ -2,6 +2,13 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: third_party_route
+          uri: lb://blkmkt-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+
         - id: good_route
           uri: lb://blkmkt-good
           predicates:
