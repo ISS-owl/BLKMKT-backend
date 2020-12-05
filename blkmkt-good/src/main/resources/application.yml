@@ -1,4 +1,10 @@
 spring:
+  application:
+    name: blkmkt-good
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.101.64.188:8848
   datasource:
     username: root
     password: root
