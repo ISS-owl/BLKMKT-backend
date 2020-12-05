@@ -3,7 +3,6 @@ package io.github.blkmkt.order;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.blkmkt.order.entity.OrderEntity;
 import io.github.blkmkt.order.service.OrderService;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
