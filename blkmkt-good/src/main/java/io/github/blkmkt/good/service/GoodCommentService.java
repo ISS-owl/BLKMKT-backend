@@ -15,6 +15,6 @@ import io.github.blkmkt.good.entity.GoodCommentEntity;
  */
 public interface GoodCommentService extends IService<GoodCommentEntity> {
 
-    PageUtils queryPage(PageParam params);
+    PageUtils<GoodCommentEntity> queryPage(PageParam params);
 }
 

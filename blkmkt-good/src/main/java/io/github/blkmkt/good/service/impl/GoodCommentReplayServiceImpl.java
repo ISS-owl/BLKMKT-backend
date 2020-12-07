@@ -1,5 +1,6 @@
 package io.github.blkmkt.good.service.impl;
 
+import io.github.blkmkt.good.entity.GoodCommentEntity;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,13 +18,13 @@ import io.github.blkmkt.good.service.GoodCommentReplayService;
 public class GoodCommentReplayServiceImpl extends ServiceImpl<GoodCommentReplayDao, GoodCommentReplayEntity> implements GoodCommentReplayService {
 
     @Override
-    public PageUtils queryPage(PageParam params) {
+    public PageUtils<GoodCommentReplayEntity> queryPage(PageParam params) {
         IPage<GoodCommentReplayEntity> page = this.page(
                 new Query<GoodCommentReplayEntity>().getPage(params),
-                new QueryWrapper<GoodCommentReplayEntity>()
+                new QueryWrapper<>()
         );
 
-        return new PageUtils(page);
+        return new PageUtils<>(page);
     }
 
 }

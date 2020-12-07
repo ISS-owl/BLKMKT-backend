@@ -17,13 +17,13 @@ import io.github.blkmkt.good.service.GoodService;
 public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements GoodService {
 
     @Override
-    public PageUtils queryPage(PageParam params) {
+    public PageUtils<GoodEntity> queryPage(PageParam params) {
         IPage<GoodEntity> page = this.page(
                 new Query<GoodEntity>().getPage(params),
-                new QueryWrapper<GoodEntity>()
+                new QueryWrapper<>()
         );
 
-        return new PageUtils(page);
+        return new PageUtils<>(page);
     }
 
 }

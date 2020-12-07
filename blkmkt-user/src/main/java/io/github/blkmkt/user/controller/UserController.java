@@ -1,20 +1,18 @@
 package io.github.blkmkt.user.controller;
 
 import java.util.Arrays;
-import java.util.Map;
 
-// import org.apache.shiro.authz.annotation.RequiresPermissions;
+import io.github.common.entity.PageParam;
+import io.github.common.entity.Response;
+import io.github.common.entity.ResponseWithData;
+import io.github.common.utils.ResponseUtils;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.github.blkmkt.user.entity.UserEntity;
 import io.github.blkmkt.user.service.UserService;
 import io.github.common.utils.PageUtils;
-import io.github.common.utils.R;
 
 
 
@@ -23,8 +21,9 @@ import io.github.common.utils.R;
  *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-11-15 23:54:16
+ * @date 2020-12-07 19:59:03
  */
+@Api(tags = {"用户"})
 @RestController
 @RequestMapping("user/user")
 public class UserController {
@@ -34,57 +33,69 @@ public class UserController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    // @RequiresPermissions("user:user:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = userService.queryPage(params);
+    @GetMapping("/list")
+    @ApiOperation(value = "所有信息", notes = "根据分页参数（可缺省）获取信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
+            @ApiImplicitParam(name = "pageSize", value = "Size of pages")
+    })
+    public ResponseWithData<PageUtils<UserEntity>> list(
+            @RequestParam(value = "pageNo", required = false) Long pageNo,
+            @RequestParam(value = "pageSize", required = false) Long pageSize
+    ){
+        PageParam params = new PageParam(pageNo, pageSize, null, null);
+        PageUtils<UserEntity> page = userService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return ResponseUtils.ok(page);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    // @RequiresPermissions("user:user:info")
-    public R info(@PathVariable("id") Integer id){
+    @GetMapping("/{id}")
+    @ApiOperation(value = "信息", notes = "获取指定id的信息")
+    @ApiImplicitParam(name = "id", value = "id", required = true)
+    public ResponseWithData<UserEntity> info(@PathVariable("id") Integer id){
 		UserEntity user = userService.getById(id);
 
-        return R.ok().put("user", user);
+        return ResponseUtils.ok(user);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    // @RequiresPermissions("user:user:save")
-    public R save(@RequestBody UserEntity user){
+    @PostMapping("/")
+    @ApiOperation(value = "保存信息", notes = "保存信息")
+    @ApiImplicitParam(name = "user", value = "user entity", required = true)
+    public Response save(@RequestBody UserEntity user){
 		userService.save(user);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    // @RequiresPermissions("user:user:update")
-    public R update(@RequestBody UserEntity user){
+    @PutMapping("/")
+    @ApiOperation(value = "更新信息", notes = "更新信息")
+    @ApiImplicitParam(name = "user", value = "user entity", required = true)
+    public Response update(@RequestBody UserEntity user){
 		userService.updateById(user);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    // @RequiresPermissions("user:user:delete")
-    public R delete(@RequestBody Integer[] ids){
+    @DeleteMapping("/")
+    @ApiOperation(value = "删除", notes = "删除信息")
+    @ApiImplicitParam(name = "ids", value = "id array", required = true)
+    public Response delete(@RequestBody Integer[] ids){
 		userService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
 }

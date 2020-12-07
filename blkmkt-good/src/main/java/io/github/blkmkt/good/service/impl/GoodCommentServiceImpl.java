@@ -17,13 +17,13 @@ import io.github.blkmkt.good.service.GoodCommentService;
 public class GoodCommentServiceImpl extends ServiceImpl<GoodCommentDao, GoodCommentEntity> implements GoodCommentService {
 
     @Override
-    public PageUtils queryPage(PageParam params) {
+    public PageUtils<GoodCommentEntity> queryPage(PageParam params) {
         IPage<GoodCommentEntity> page = this.page(
                 new Query<GoodCommentEntity>().getPage(params),
-                new QueryWrapper<GoodCommentEntity>()
+                new QueryWrapper<>()
         );
 
-        return new PageUtils(page);
+        return new PageUtils<>(page);
     }
 
 }

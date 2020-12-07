@@ -15,6 +15,6 @@ import io.github.blkmkt.good.entity.GoodCommentReplayEntity;
  */
 public interface GoodCommentReplayService extends IService<GoodCommentReplayEntity> {
 
-    PageUtils queryPage(PageParam params);
+    PageUtils<GoodCommentReplayEntity> queryPage(PageParam params);
 }
 

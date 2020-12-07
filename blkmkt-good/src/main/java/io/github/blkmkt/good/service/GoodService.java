@@ -15,6 +15,6 @@ import io.github.blkmkt.good.entity.GoodEntity;
  */
 public interface GoodService extends IService<GoodEntity> {
 
-    PageUtils queryPage(PageParam params);
+    PageUtils<GoodEntity> queryPage(PageParam params);
 }
 

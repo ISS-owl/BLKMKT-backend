@@ -21,9 +21,9 @@ import io.github.common.utils.PageUtils;
  *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-12-07 16:12:43
+ * @date 2020-12-07 19:53:23
  */
-@Api(tags = {"商品评论"})
+@Api(tags = {""})
 @RestController
 @RequestMapping("good/goodcomment")
 public class GoodCommentController {
@@ -39,12 +39,12 @@ public class GoodCommentController {
             @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
             @ApiImplicitParam(name = "pageSize", value = "Size of pages")
     })
-    public ResponseWithData<PageUtils> list(
-            @RequestParam(required = false) Long pageNo,
-            @RequestParam(required = false) Long pageSize
+    public ResponseWithData<PageUtils<GoodCommentEntity>> list(
+            @RequestParam(value = "pageNo", required = false) Long pageNo,
+            @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
         PageParam params = new PageParam(pageNo, pageSize, null, null);
-        PageUtils page = goodCommentService.queryPage(params);
+        PageUtils<GoodCommentEntity> page = goodCommentService.queryPage(params);
 
         return ResponseUtils.ok(page);
     }

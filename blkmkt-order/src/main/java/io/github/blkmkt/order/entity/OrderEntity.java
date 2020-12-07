@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -12,10 +13,10 @@ import lombok.Data;
  * 
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-11-15 23:41:32
+ * @date 2020-12-07 20:22:03
  */
 @Data
-@TableName("`order`")
+@TableName("order")
 public class OrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,14 +24,17 @@ public class OrderEntity implements Serializable {
 	 * 订单号
 	 */
 	@TableId
+	@ApiModelProperty(name = "id", value = "订单号")
 	private Integer id;
 	/**
 	 * 货物id
 	 */
+	@ApiModelProperty(name = "goodId", value = "货物id")
 	private Integer goodId;
 	/**
 	 * 用户id
 	 */
+	@ApiModelProperty(name = "userId", value = "用户id")
 	private Integer userId;
 
 }

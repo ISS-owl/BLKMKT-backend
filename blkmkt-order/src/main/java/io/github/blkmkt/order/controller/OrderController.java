@@ -1,20 +1,18 @@
 package io.github.blkmkt.order.controller;
 
 import java.util.Arrays;
-import java.util.Map;
 
-// import org.apache.shiro.authz.annotation.RequiresPermissions;
+import io.github.common.entity.PageParam;
+import io.github.common.entity.Response;
+import io.github.common.entity.ResponseWithData;
+import io.github.common.utils.ResponseUtils;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.github.blkmkt.order.entity.OrderEntity;
 import io.github.blkmkt.order.service.OrderService;
 import io.github.common.utils.PageUtils;
-import io.github.common.utils.R;
 
 
 
@@ -23,8 +21,9 @@ import io.github.common.utils.R;
  *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-11-15 23:41:32
+ * @date 2020-12-07 20:22:03
  */
+@Api(tags = {""})
 @RestController
 @RequestMapping("order/order")
 public class OrderController {
@@ -34,57 +33,69 @@ public class OrderController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    // @RequiresPermissions("order:order:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = orderService.queryPage(params);
+    @GetMapping("/list")
+    @ApiOperation(value = "所有信息", notes = "根据分页参数（可缺省）获取信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
+            @ApiImplicitParam(name = "pageSize", value = "Size of pages")
+    })
+    public ResponseWithData<PageUtils<OrderEntity>> list(
+            @RequestParam(value = "pageNo", required = false) Long pageNo,
+            @RequestParam(value = "pageSize", required = false) Long pageSize
+    ){
+        PageParam params = new PageParam(pageNo, pageSize, null, null);
+        PageUtils<OrderEntity> page = orderService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return ResponseUtils.ok(page);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    // @RequiresPermissions("order:order:info")
-    public R info(@PathVariable("id") Integer id){
+    @GetMapping("/{id}")
+    @ApiOperation(value = "信息", notes = "获取指定id的信息")
+    @ApiImplicitParam(name = "id", value = "id", required = true)
+    public ResponseWithData<OrderEntity> info(@PathVariable("id") Integer id){
 		OrderEntity order = orderService.getById(id);
 
-        return R.ok().put("order", order);
+        return ResponseUtils.ok(order);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    // @RequiresPermissions("order:order:save")
-    public R save(@RequestBody OrderEntity order){
+    @PostMapping("/")
+    @ApiOperation(value = "保存信息", notes = "保存信息")
+    @ApiImplicitParam(name = "order", value = "order entity", required = true)
+    public Response save(@RequestBody OrderEntity order){
 		orderService.save(order);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    // @RequiresPermissions("order:order:update")
-    public R update(@RequestBody OrderEntity order){
+    @PutMapping("/")
+    @ApiOperation(value = "更新信息", notes = "更新信息")
+    @ApiImplicitParam(name = "order", value = "order entity", required = true)
+    public Response update(@RequestBody OrderEntity order){
 		orderService.updateById(order);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    // @RequiresPermissions("order:order:delete")
-    public R delete(@RequestBody Integer[] ids){
+    @DeleteMapping("/")
+    @ApiOperation(value = "删除", notes = "删除信息")
+    @ApiImplicitParam(name = "ids", value = "id array", required = true)
+    public Response delete(@RequestBody Integer[] ids){
 		orderService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
 }
