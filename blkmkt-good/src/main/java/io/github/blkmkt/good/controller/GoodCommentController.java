@@ -1,20 +1,18 @@
 package io.github.blkmkt.good.controller;
 
 import java.util.Arrays;
-import java.util.Map;
 
-// import org.apache.shiro.authz.annotation.RequiresPermissions;
+import io.github.common.entity.PageParam;
+import io.github.common.entity.Response;
+import io.github.common.entity.ResponseWithData;
+import io.github.common.utils.ResponseUtils;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.github.blkmkt.good.entity.GoodCommentEntity;
 import io.github.blkmkt.good.service.GoodCommentService;
 import io.github.common.utils.PageUtils;
-import io.github.common.utils.R;
 
 
 
@@ -23,8 +21,9 @@ import io.github.common.utils.R;
  *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-11-15 21:00:52
+ * @date 2020-12-07 16:12:43
  */
+@Api(tags = {"商品评论"})
 @RestController
 @RequestMapping("good/goodcomment")
 public class GoodCommentController {
@@ -34,53 +33,69 @@ public class GoodCommentController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    @GetMapping("/list")
+    @ApiOperation(value = "所有信息", notes = "根据分页参数（可缺省）获取信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
+            @ApiImplicitParam(name = "pageSize", value = "Size of pages")
+    })
+    public ResponseWithData<PageUtils> list(
+            @RequestParam(required = false) Long pageNo,
+            @RequestParam(required = false) Long pageSize
+    ){
+        PageParam params = new PageParam(pageNo, pageSize, null, null);
         PageUtils page = goodCommentService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return ResponseUtils.ok(page);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    public R info(@PathVariable("id") Integer id){
+    @GetMapping("/{id}")
+    @ApiOperation(value = "信息", notes = "获取指定id的信息")
+    @ApiImplicitParam(name = "id", value = "id", required = true)
+    public ResponseWithData<GoodCommentEntity> info(@PathVariable("id") Integer id){
 		GoodCommentEntity goodComment = goodCommentService.getById(id);
 
-        return R.ok().put("goodComment", goodComment);
+        return ResponseUtils.ok(goodComment);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    public R save(@RequestBody GoodCommentEntity goodComment){
+    @PostMapping("/")
+    @ApiOperation(value = "保存信息", notes = "保存信息")
+    @ApiImplicitParam(name = "goodComment", value = "goodComment entity", required = true)
+    public Response save(@RequestBody GoodCommentEntity goodComment){
 		goodCommentService.save(goodComment);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    public R update(@RequestBody GoodCommentEntity goodComment){
+    @PutMapping("/")
+    @ApiOperation(value = "更新信息", notes = "更新信息")
+    @ApiImplicitParam(name = "goodComment", value = "goodComment entity", required = true)
+    public Response update(@RequestBody GoodCommentEntity goodComment){
 		goodCommentService.updateById(goodComment);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    // @RequiresPermissions("good:goodcomment:delete")
-    public R delete(@RequestBody Integer[] ids){
+    @DeleteMapping("/")
+    @ApiOperation(value = "删除", notes = "删除信息")
+    @ApiImplicitParam(name = "ids", value = "id array", required = true)
+    public Response delete(@RequestBody Integer[] ids){
 		goodCommentService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
 }

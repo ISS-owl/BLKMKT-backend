@@ -1,20 +1,18 @@
 package io.github.blkmkt.good.controller;
 
 import java.util.Arrays;
-import java.util.Map;
 
-// import org.apache.shiro.authz.annotation.RequiresPermissions;
+import io.github.common.entity.PageParam;
+import io.github.common.entity.Response;
+import io.github.common.entity.ResponseWithData;
+import io.github.common.utils.ResponseUtils;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.github.blkmkt.good.entity.GoodEntity;
 import io.github.blkmkt.good.service.GoodService;
 import io.github.common.utils.PageUtils;
-import io.github.common.utils.R;
 
 
 
@@ -23,8 +21,9 @@ import io.github.common.utils.R;
  *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-11-15 21:00:52
+ * @date 2020-12-07 16:12:43
  */
+@Api(tags = {"商品"})
 @RestController
 @RequestMapping("good/good")
 public class GoodController {
@@ -34,57 +33,69 @@ public class GoodController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    // @RequiresPermissions("good:good:list")
-    public R list(@RequestParam Map<String, Object> params){
+    @GetMapping("/list")
+    @ApiOperation(value = "所有信息", notes = "根据分页参数（可缺省）获取信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
+            @ApiImplicitParam(name = "pageSize", value = "Size of pages")
+    })
+    public ResponseWithData<PageUtils> list(
+            @RequestParam(required = false) Long pageNo,
+            @RequestParam(required = false) Long pageSize
+    ){
+        PageParam params = new PageParam(pageNo, pageSize, null, null);
         PageUtils page = goodService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return ResponseUtils.ok(page);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    // @RequiresPermissions("good:good:info")
-    public R info(@PathVariable("id") Integer id){
+    @GetMapping("/{id}")
+    @ApiOperation(value = "信息", notes = "获取指定id的信息")
+    @ApiImplicitParam(name = "id", value = "id", required = true)
+    public ResponseWithData<GoodEntity> info(@PathVariable("id") Integer id){
 		GoodEntity good = goodService.getById(id);
 
-        return R.ok().put("good", good);
+        return ResponseUtils.ok(good);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    // @RequiresPermissions("good:good:save")
-    public R save(@RequestBody GoodEntity good){
+    @PostMapping("/")
+    @ApiOperation(value = "保存信息", notes = "保存信息")
+    @ApiImplicitParam(name = "good", value = "good entity", required = true)
+    public Response save(@RequestBody GoodEntity good){
 		goodService.save(good);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    // @RequiresPermissions("good:good:update")
-    public R update(@RequestBody GoodEntity good){
+    @PutMapping("/")
+    @ApiOperation(value = "更新信息", notes = "更新信息")
+    @ApiImplicitParam(name = "good", value = "good entity", required = true)
+    public Response update(@RequestBody GoodEntity good){
 		goodService.updateById(good);
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    // @RequiresPermissions("good:good:delete")
-    public R delete(@RequestBody Integer[] ids){
+    @DeleteMapping("/")
+    @ApiOperation(value = "删除", notes = "删除信息")
+    @ApiImplicitParam(name = "ids", value = "id array", required = true)
+    public Response delete(@RequestBody Integer[] ids){
 		goodService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return ResponseUtils.ok();
     }
 
 }
