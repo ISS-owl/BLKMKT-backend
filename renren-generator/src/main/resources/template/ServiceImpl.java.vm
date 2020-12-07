@@ -17,13 +17,13 @@ import ${package}.${moduleName}.service.${className}Service;
 public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity> implements ${className}Service {
 
     @Override
-    public PageUtils queryPage(PageParam params) {
+    public PageUtils<${className}Entity> queryPage(PageParam params) {
         IPage<${className}Entity> page = this.page(
                 new Query<${className}Entity>().getPage(params),
-                new QueryWrapper<${className}Entity>()
+                new QueryWrapper<>()
         );
 
-        return new PageUtils(page);
+        return new PageUtils<>(page);
     }
 
 }

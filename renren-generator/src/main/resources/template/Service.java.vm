@@ -15,6 +15,6 @@ import ${package}.${moduleName}.entity.${className}Entity;
  */
 public interface ${className}Service extends IService<${className}Entity> {
 
-    PageUtils queryPage(PageParam params);
+    PageUtils<${className}Entity> queryPage(PageParam params);
 }
 

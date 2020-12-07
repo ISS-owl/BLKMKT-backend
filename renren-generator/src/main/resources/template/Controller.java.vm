@@ -39,12 +39,12 @@ public class ${className}Controller {
             @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
             @ApiImplicitParam(name = "pageSize", value = "Size of pages")
     })
-    public ResponseWithData<PageUtils> list(
+    public ResponseWithData<PageUtils<${className}Entity>> list(
             @RequestParam(value = "pageNo", required = false) Long pageNo,
             @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
         PageParam params = new PageParam(pageNo, pageSize, null, null);
-        PageUtils page = ${classname}Service.queryPage(params);
+        PageUtils<${className}Entity> page = ${classname}Service.queryPage(params);
 
         return ResponseUtils.ok(page);
     }
