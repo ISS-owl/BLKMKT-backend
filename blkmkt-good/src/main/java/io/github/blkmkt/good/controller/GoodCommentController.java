@@ -23,9 +23,9 @@ import io.github.common.utils.PageUtils;
  * @email zhihaoshen7@qq.com
  * @date 2020-12-07 19:53:23
  */
-@Api(tags = {""})
+@Api(tags = {"商品评论"})
 @RestController
-@RequestMapping("good/goodcomment")
+@RequestMapping("good/good_comment")
 public class GoodCommentController {
     @Autowired
     private GoodCommentService goodCommentService;

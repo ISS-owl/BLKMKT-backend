@@ -23,7 +23,7 @@ import io.github.common.utils.PageUtils;
  * @email zhihaoshen7@qq.com
  * @date 2020-12-07 19:53:23
  */
-@Api(tags = {""})
+@Api(tags = {"商品"})
 @RestController
 @RequestMapping("good/good")
 public class GoodController {
