@@ -24,17 +24,17 @@ public class OrderEntity implements Serializable {
 	 * 订单号
 	 */
 	@TableId
-	@ApiModelProperty(name = "id", value = "订单号")
+	@ApiModelProperty(name = "id", value = "订单号", example = "1")
 	private Integer id;
 	/**
 	 * 货物id
 	 */
-	@ApiModelProperty(name = "goodId", value = "货物id")
+	@ApiModelProperty(name = "goodId", value = "货物id", example = "2")
 	private Integer goodId;
 	/**
 	 * 用户id
 	 */
-	@ApiModelProperty(name = "userId", value = "用户id")
+	@ApiModelProperty(name = "userId", value = "用户id", example = "3")
 	private Integer userId;
 
 }
