@@ -36,8 +36,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("商品API文档")                        // 定义文档标题
-                .description("这是一篇关于商品的API文档")    // 定义文档描述
+                .title("订单API文档")                        // 定义文档标题
+                .description("这是一篇关于订单的API文档")    // 定义文档描述
                 .termsOfServiceUrl("http://swagger.io/terms/")                        // 定义服务条款
                 .contact(new Contact("ShZh7", "https://github.com/Sh-Zh-7", "zhihaoshen7@qq.com"))    // 定义联系信息
                 .license("GPL-v3.0")        // 定义 License
