@@ -23,7 +23,8 @@ public class SwaggerConfig {
         ApiSelectorBuilder builder = new Docket(DocumentationType.SWAGGER_2)    // 定义 Swagger 2.0 规范
                 .apiInfo(apiInfo())                                                    // 定义全局描述信息
                 .tags(
-                        new Tag("用户", "所有关于用户的内容")
+                        new Tag("用户", "所有关于用户的内容"),
+                        new Tag("用户登录与注册", "所有关于用户登陆与注册的内容")
                 )
                 .select();
 

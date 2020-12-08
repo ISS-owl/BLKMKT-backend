@@ -7,11 +7,15 @@ import io.github.blkmkt.user.service.LoginService;
 import io.github.blkmkt.user.vo.RegisterVo;
 import io.github.blkmkt.user.vo.UserLoginVo;
 import io.github.common.entity.Response;
+import io.github.common.entity.ResponseWithData;
 import io.github.common.exception.BizCodeEnum;
 import io.github.common.utils.ResponseUtils;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = {"用户登录与注册"})
 @RestController
 @RequestMapping("user/")
 public class LoginController {
@@ -19,6 +23,8 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
+    @ApiOperation(value = "登录", notes = "给定学号和密码进行登录")
+    @ApiImplicitParam(name = "userLoginVo", value = "用户登录所需信息的实体")
     public Response login(@RequestBody UserLoginVo userLoginVo) {
         UserEntity userEntity = loginService.login(userLoginVo);
         if (userEntity != null) {
@@ -32,6 +38,8 @@ public class LoginController {
     }
 
     @PostMapping("/register")
+    @ApiOperation(value = "注册", notes = "给定注册信息进行注册")
+    @ApiImplicitParam(name = "registerVo", value = "用户注册所需信息的实体")
     public Response register(@RequestBody RegisterVo registerVo) {
         try {
             loginService.register(registerVo);
