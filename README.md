@@ -4,4 +4,5 @@
 
 <h1 align="center">BLKMKT backend</h1>
 
-The backend of the website version of International School of Software, WHU.
+<p align="center"><B>The backend of the website version of black market in WHU ISS</B></p>
+
