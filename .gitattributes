@@ -1,5 +1,6 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
 * text=auto
 
-# Ignore all js files when statistical analysising
-*.js linguist-vendored
+# Ignore renren open source files when statistical analysising
+renren-fast/* linguist-vendored
+renren-generator/* linguist-vendored
