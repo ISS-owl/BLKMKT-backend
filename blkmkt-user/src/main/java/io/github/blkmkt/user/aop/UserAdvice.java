@@ -1,7 +1,6 @@
 package io.github.blkmkt.user.aop;
 
-import io.github.common.entity.Response;
-import io.github.common.utils.ResponseUtils;
+import io.github.common.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,7 +14,7 @@ import java.util.Map;
 @RestControllerAdvice(basePackages = "io.github.blkmkt.user.controller")
 public class UserAdvice {
     @ExceptionHandler(value = Exception.class)
-    public Response handleValidException(MethodArgumentNotValidException exception){
+    public R handleValidException(MethodArgumentNotValidException exception){
         Map<String, String> map = new HashMap<>();
         BindingResult bindingResult = exception.getBindingResult();
         bindingResult.getFieldErrors().forEach(fieldError -> {
@@ -25,6 +24,6 @@ public class UserAdvice {
         });
 
         log.error("数据校验出现问题{}, 异常类型{}",exception.getMessage(), exception.getClass());
-        return ResponseUtils.error(400, "data validation error", map);
+        return R.error(400, "data validation error").put("errors", map);
     }
 }

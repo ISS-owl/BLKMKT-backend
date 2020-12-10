@@ -5,6 +5,7 @@ import java.util.Arrays;
 import io.github.common.entity.PageParam;
 import io.github.common.entity.Response;
 import io.github.common.entity.ResponseWithData;
+import io.github.common.utils.R;
 import io.github.common.utils.ResponseUtils;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,14 @@ public class OrderController {
             @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
             @ApiImplicitParam(name = "pageSize", value = "Size of pages")
     })
-    public ResponseWithData<PageUtils<OrderEntity>> list(
+    public R list(
             @RequestParam(value = "pageNo", required = false) Long pageNo,
             @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
         PageParam params = new PageParam(pageNo, pageSize, null, null);
         PageUtils<OrderEntity> page = orderService.queryPage(params);
 
-        return ResponseUtils.ok(page);
+        return R.ok().put("page", page);
     }
 
 
@@ -56,10 +57,10 @@ public class OrderController {
     @GetMapping("/{id}")
     @ApiOperation(value = "信息", notes = "获取指定id的信息")
     @ApiImplicitParam(name = "id", value = "id", required = true)
-    public ResponseWithData<OrderEntity> info(@PathVariable("id") Integer id){
+    public R info(@PathVariable("id") Integer id){
 		OrderEntity order = orderService.getById(id);
 
-        return ResponseUtils.ok(order);
+        return R.ok().put("order", order);
     }
 
     /**
@@ -68,10 +69,10 @@ public class OrderController {
     @PostMapping("/")
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "order", value = "order entity", required = true)
-    public Response save(@RequestBody OrderEntity order){
+    public R save(@RequestBody OrderEntity order){
 		orderService.save(order);
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +81,10 @@ public class OrderController {
     @PutMapping("/")
     @ApiOperation(value = "更新信息", notes = "更新信息")
     @ApiImplicitParam(name = "order", value = "order entity", required = true)
-    public Response update(@RequestBody OrderEntity order){
+    public R update(@RequestBody OrderEntity order){
 		orderService.updateById(order);
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -92,10 +93,10 @@ public class OrderController {
     @DeleteMapping("/")
     @ApiOperation(value = "删除", notes = "删除信息")
     @ApiImplicitParam(name = "ids", value = "id array", required = true)
-    public Response delete(@RequestBody Integer[] ids){
+    public R delete(@RequestBody Integer[] ids){
 		orderService.removeByIds(Arrays.asList(ids));
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
 }

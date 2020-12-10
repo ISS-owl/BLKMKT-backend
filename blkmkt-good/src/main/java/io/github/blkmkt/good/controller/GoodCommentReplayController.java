@@ -3,9 +3,7 @@ package io.github.blkmkt.good.controller;
 import java.util.Arrays;
 
 import io.github.common.entity.PageParam;
-import io.github.common.entity.Response;
-import io.github.common.entity.ResponseWithData;
-import io.github.common.utils.ResponseUtils;
+import io.github.common.utils.R;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +19,9 @@ import io.github.common.utils.PageUtils;
  *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-12-07 19:53:23
+ * @date 2020-12-10 22:26:54
  */
-@Api(tags = {"商品评论回复"})
+@Api(tags = {""})
 @RestController
 @RequestMapping("good/good_comment_replay")
 public class GoodCommentReplayController {
@@ -39,14 +37,14 @@ public class GoodCommentReplayController {
             @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
             @ApiImplicitParam(name = "pageSize", value = "Size of pages")
     })
-    public ResponseWithData<PageUtils<GoodCommentReplayEntity>> list(
+    public R list(
             @RequestParam(value = "pageNo", required = false) Long pageNo,
             @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
         PageParam params = new PageParam(pageNo, pageSize, null, null);
         PageUtils<GoodCommentReplayEntity> page = goodCommentReplayService.queryPage(params);
 
-        return ResponseUtils.ok(page);
+        return R.ok().put("page", page);
     }
 
 
@@ -56,10 +54,10 @@ public class GoodCommentReplayController {
     @GetMapping("/{id}")
     @ApiOperation(value = "信息", notes = "获取指定id的信息")
     @ApiImplicitParam(name = "id", value = "id", required = true)
-    public ResponseWithData<GoodCommentReplayEntity> info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		GoodCommentReplayEntity goodCommentReplay = goodCommentReplayService.getById(id);
 
-        return ResponseUtils.ok(goodCommentReplay);
+        return R.ok().put("goodCommentReplay", goodCommentReplay);
     }
 
     /**
@@ -68,10 +66,10 @@ public class GoodCommentReplayController {
     @PostMapping("/")
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "goodCommentReplay", value = "goodCommentReplay entity", required = true)
-    public Response save(@RequestBody GoodCommentReplayEntity goodCommentReplay){
+    public R save(@RequestBody GoodCommentReplayEntity goodCommentReplay){
 		goodCommentReplayService.save(goodCommentReplay);
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +78,10 @@ public class GoodCommentReplayController {
     @PutMapping("/")
     @ApiOperation(value = "更新信息", notes = "更新信息")
     @ApiImplicitParam(name = "goodCommentReplay", value = "goodCommentReplay entity", required = true)
-    public Response update(@RequestBody GoodCommentReplayEntity goodCommentReplay){
+    public R update(@RequestBody GoodCommentReplayEntity goodCommentReplay){
 		goodCommentReplayService.updateById(goodCommentReplay);
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -92,10 +90,10 @@ public class GoodCommentReplayController {
     @DeleteMapping("/")
     @ApiOperation(value = "删除", notes = "删除信息")
     @ApiImplicitParam(name = "ids", value = "id array", required = true)
-    public Response delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		goodCommentReplayService.removeByIds(Arrays.asList(ids));
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
 }

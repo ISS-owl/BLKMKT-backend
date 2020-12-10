@@ -24,7 +24,6 @@ public class LoginServiceImpl extends ServiceImpl<UserDao, UserEntity> implement
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             boolean matches = bCryptPasswordEncoder.matches(loginVo.getPassword(), userEntity.getPassword());
             if (matches) {
-                // 屏蔽用户密码
                 return userEntity;
             }
         }

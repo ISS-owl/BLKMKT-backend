@@ -1,18 +1,18 @@
 package io.github.blkmkt.user.controller;
 
-import java.util.Arrays;
-
+import io.github.blkmkt.user.entity.UserEntity;
+import io.github.blkmkt.user.service.UserService;
 import io.github.common.entity.PageParam;
-import io.github.common.entity.Response;
-import io.github.common.entity.ResponseWithData;
-import io.github.common.utils.ResponseUtils;
-import io.swagger.annotations.*;
+import io.github.common.utils.PageUtils;
+import io.github.common.utils.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import io.github.blkmkt.user.entity.UserEntity;
-import io.github.blkmkt.user.service.UserService;
-import io.github.common.utils.PageUtils;
+import java.util.Arrays;
 
 
 
@@ -39,14 +39,14 @@ public class UserController {
             @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
             @ApiImplicitParam(name = "pageSize", value = "Size of pages")
     })
-    public ResponseWithData<PageUtils<UserEntity>> list(
+    public R list(
             @RequestParam(value = "pageNo", required = false) Long pageNo,
             @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
         PageParam params = new PageParam(pageNo, pageSize, null, null);
         PageUtils<UserEntity> page = userService.queryPage(params);
 
-        return ResponseUtils.ok(page);
+        return R.ok().put("page", page);
     }
 
 
@@ -56,10 +56,10 @@ public class UserController {
     @GetMapping("/{id}")
     @ApiOperation(value = "信息", notes = "获取指定id的信息")
     @ApiImplicitParam(name = "id", value = "id", required = true)
-    public ResponseWithData<UserEntity> info(@PathVariable("id") Integer id){
+    public R info(@PathVariable("id") Integer id){
 		UserEntity user = userService.getById(id);
 
-        return ResponseUtils.ok(user);
+        return R.ok().put("user", user);
     }
 
     /**
@@ -68,10 +68,10 @@ public class UserController {
     @PostMapping("/")
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "user", value = "user entity", required = true)
-    public Response save(@RequestBody UserEntity user){
+    public R save(@RequestBody UserEntity user){
 		userService.save(user);
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class UserController {
     @PutMapping("/")
     @ApiOperation(value = "更新信息", notes = "更新信息")
     @ApiImplicitParam(name = "user", value = "user entity", required = true)
-    public Response update(@RequestBody UserEntity user){
+    public R update(@RequestBody UserEntity user){
 		userService.updateById(user);
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -92,10 +92,10 @@ public class UserController {
     @DeleteMapping("/")
     @ApiOperation(value = "删除", notes = "删除信息")
     @ApiImplicitParam(name = "ids", value = "id array", required = true)
-    public Response delete(@RequestBody Integer[] ids){
+    public R delete(@RequestBody Integer[] ids){
 		userService.removeByIds(Arrays.asList(ids));
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
 }

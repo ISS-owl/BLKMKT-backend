@@ -3,9 +3,7 @@ package ${package}.${moduleName}.controller;
 import java.util.Arrays;
 
 import io.github.common.entity.PageParam;
-import io.github.common.entity.Response;
-import io.github.common.entity.ResponseWithData;
-import io.github.common.utils.ResponseUtils;
+import io.github.common.utils.R;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,14 +37,14 @@ public class ${className}Controller {
             @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
             @ApiImplicitParam(name = "pageSize", value = "Size of pages")
     })
-    public ResponseWithData<PageUtils<${className}Entity>> list(
+    public R list(
             @RequestParam(value = "pageNo", required = false) Long pageNo,
             @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
         PageParam params = new PageParam(pageNo, pageSize, null, null);
         PageUtils<${className}Entity> page = ${classname}Service.queryPage(params);
 
-        return ResponseUtils.ok(page);
+        return R.ok().put("page", page);
     }
 
 
@@ -56,10 +54,10 @@ public class ${className}Controller {
     @GetMapping("/{id}")
     @ApiOperation(value = "信息", notes = "获取指定id的信息")
     @ApiImplicitParam(name = "id", value = "id", required = true)
-    public ResponseWithData<${className}Entity> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+    public R info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
 		${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
 
-        return ResponseUtils.ok(${classname});
+        return R.ok().put("${classname}", ${classname});
     }
 
     /**
@@ -68,10 +66,10 @@ public class ${className}Controller {
     @PostMapping("/")
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "${classname}", value = "${classname} entity", required = true)
-    public Response save(@RequestBody ${className}Entity ${classname}){
+    public R save(@RequestBody ${className}Entity ${classname}){
 		${classname}Service.save(${classname});
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +78,10 @@ public class ${className}Controller {
     @PutMapping("/")
     @ApiOperation(value = "更新信息", notes = "更新信息")
     @ApiImplicitParam(name = "${classname}", value = "${classname} entity", required = true)
-    public Response update(@RequestBody ${className}Entity ${classname}){
+    public R update(@RequestBody ${className}Entity ${classname}){
 		${classname}Service.updateById(${classname});
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
     /**
@@ -92,10 +90,10 @@ public class ${className}Controller {
     @DeleteMapping("/")
     @ApiOperation(value = "删除", notes = "删除信息")
     @ApiImplicitParam(name = "${pk.attrname}s", value = "${pk.attrname} array", required = true)
-    public Response delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
+    public R delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
 		${classname}Service.removeByIds(Arrays.asList(${pk.attrname}s));
 
-        return ResponseUtils.ok();
+        return R.ok();
     }
 
 }
