@@ -4,9 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import io.github.common.entity.Response;
 import io.github.common.exception.BizCodeEnum;
-import io.github.common.utils.ResponseUtils;
+import io.github.common.utils.R;
 import io.github.issowl.gateway.utils.JWTUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +70,8 @@ public class JWTAuthFilter implements GlobalFilter {
 
      private Mono<Void> getVoidMono(ServerHttpResponse serverHttpResponse, BizCodeEnum bizCodeEnum) {
          serverHttpResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-         Response responseResult = ResponseUtils.error(bizCodeEnum.getCode(), bizCodeEnum.getMsg());
-         DataBuffer dataBuffer = serverHttpResponse.bufferFactory().wrap(JSON.toJSONString(responseResult).getBytes());
+         R response = R.error(bizCodeEnum.getCode(), bizCodeEnum.getMsg());
+         DataBuffer dataBuffer = serverHttpResponse.bufferFactory().wrap(JSON.toJSONString(response).getBytes());
          return serverHttpResponse.writeWith(Flux.just(dataBuffer));
     }
 }
