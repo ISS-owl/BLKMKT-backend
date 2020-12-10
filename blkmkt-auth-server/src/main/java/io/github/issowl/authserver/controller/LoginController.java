@@ -35,7 +35,7 @@ public class LoginController {
             redisTemplate.opsForHash().put(studentId, "token", token);
             redisTemplate.opsForHash().put(studentId, "refresh_token", refreshToken);
 
-            redisTemplate.expire(studentId, JWTUtils.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+            redisTemplate.expire(studentId, JWTUtils.REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         }
         return response;
     }
@@ -52,7 +52,7 @@ public class LoginController {
 
         String newToken = JWTUtils.generateToken(studentId);
         redisTemplate.opsForHash().put(studentId, "token", newToken);
-        redisTemplate.expire(studentId, JWTUtils.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+        redisTemplate.expire(studentId, JWTUtils.REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
 
         return ResponseUtils.ok(newToken);
     }

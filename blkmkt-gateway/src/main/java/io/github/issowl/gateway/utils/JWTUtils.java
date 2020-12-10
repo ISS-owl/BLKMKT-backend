@@ -8,13 +8,16 @@ import java.util.Date;
 
 public class JWTUtils {
     public static final String SECRET_KEY = "blkmkt_secret_key"; // 秘钥
-    public static final long TOKEN_EXPIRE_TIME = 5 * 60 * 1000; // token过期时间
+    public static final long TOKEN_EXPIRE_TIME = 15 * 60 * 1000; // token过期时间
+    public static final long REFRESH_TOKEN_EXPIRE_TIME = 30 * 60 * 1000; // refresh token过期时间
     private static final String ISSUER = "issuer"; // 签发人
 
     public static String generateToken(String studentId){
         Date now = new Date();
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY); // 算法
 
+        // Token用TOKEN_EXPIRE_TIME
+        // redis用REFRESH_TOKEN_EXPIRE_TIME
         return JWT.create()
             .withIssuer(ISSUER) // 签发人
             .withIssuedAt(now) // 签发时间
