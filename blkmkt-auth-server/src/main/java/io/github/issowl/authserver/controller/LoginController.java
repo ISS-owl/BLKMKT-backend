@@ -38,7 +38,7 @@ public class LoginController {
 
             redisTemplate.expire(studentId, JWTUtils.REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
 
-            return Objects.requireNonNull(R.ok().put("token", token)).put("refresh_token", token);
+            return Objects.requireNonNull(response.put("token", token)).put("refresh_token", token);
         }
         return response;
     }
