@@ -24,7 +24,7 @@ public class LoginController {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public Response login(@RequestBody UserLoginVo userLoginVo) {
         Response response = userFeignService.login(userLoginVo);
         if (response.getCode() == 200) {
@@ -38,6 +38,12 @@ public class LoginController {
             redisTemplate.expire(studentId, JWTUtils.REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         }
         return response;
+    }
+
+    @GetMapping("/logout")
+    public Response logout(@RequestParam Integer studentId) {
+        redisTemplate.opsForHash().delete(String.valueOf(studentId));
+        return ResponseUtils.ok();
     }
 
     @PostMapping("/refreshToken")
