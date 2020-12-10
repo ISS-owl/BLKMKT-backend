@@ -7,13 +7,18 @@ import io.github.blkmkt.user.service.LoginService;
 import io.github.blkmkt.user.vo.RegisterVo;
 import io.github.blkmkt.user.vo.UserLoginVo;
 import io.github.common.entity.Response;
-import io.github.common.entity.ResponseWithData;
 import io.github.common.exception.BizCodeEnum;
 import io.github.common.utils.ResponseUtils;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @Api(tags = {"用户登录与注册"})
 @RestController
@@ -40,7 +45,7 @@ public class LoginController {
     @PostMapping("/register")
     @ApiOperation(value = "注册", notes = "给定注册信息进行注册")
     @ApiImplicitParam(name = "registerVo", value = "用户注册所需信息的实体")
-    public Response register(@RequestBody RegisterVo registerVo) {
+    public Response register(@Validated @RequestBody RegisterVo registerVo) {
         try {
             loginService.register(registerVo);
         } catch (UserExistException userExistException) {

@@ -24,4 +24,8 @@ public class ResponseUtils {
     public static Response error(int code, String msg) {
         return new Response(code, msg);
     }
+
+    public static <T> ResponseWithData<T> error(int code, String message, T data) {
+        return new ResponseWithData<>(code, message, data);
+    }
 }
