@@ -10,6 +10,4 @@ spring:
         server-addr: 39.101.64.188:8848
   redis:
       host: 39.101.64.188
-  session:
-      store-type: redis
 
