@@ -1,4 +1,4 @@
-package io.github.issowl.authserver.utils;
+package io.github.issowl.gateway.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
