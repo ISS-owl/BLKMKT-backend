@@ -43,8 +43,9 @@ public class LoginServiceImpl extends ServiceImpl<UserDao, UserEntity> implement
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encodePassword = bCryptPasswordEncoder.encode(registerVo.getPassword());
         userEntity.setName(registerVo.getName());
+        userEntity.setNickname(registerVo.getNickname());
         userEntity.setPassword(encodePassword);
-        userEntity.setMobile(registerVo.getPhone());
+        userEntity.setAddress(registerVo.getAddress());
         userEntity.setCreateTime(new Date());
         userEntity.setEnabled(1);
 
