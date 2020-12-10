@@ -9,6 +9,14 @@ spring:
           filters:
             - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
 
+
+        - id: auth_server_route
+          uri: lb://blkmkt-auth-server
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
         - id: good_route
           uri: lb://blkmkt-good
           predicates:
