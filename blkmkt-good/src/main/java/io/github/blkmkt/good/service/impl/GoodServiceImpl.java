@@ -70,4 +70,22 @@ public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements
         return elasticFeignService.delete(ids);
     }
 
+    @Override
+    public R getOwnerAllGoods(Integer ownerId) {
+        List<GoodEntity> goods = this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId));
+        return R.ok().put("data", goods);
+    }
+
+    @Override
+    public R getOwnerUpGoods(Integer ownerId) {
+        List<GoodEntity> goods = this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 1));
+        return R.ok().put("data", goods);
+    }
+
+    @Override
+    public R getOwnerNotUpGoods(Integer ownerId) {
+        List<GoodEntity> goods = this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 0));
+        return R.ok().put("data", goods);
+    }
+
 }

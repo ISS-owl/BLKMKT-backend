@@ -27,5 +27,11 @@ public interface GoodService extends IService<GoodEntity> {
     R updateGood(GoodEntity goodEntity);
 
     R deleteGood(List<Integer> ids);
+
+    R getOwnerAllGoods(Integer ownerId);
+
+    R getOwnerUpGoods(Integer ownerId);
+
+    R getOwnerNotUpGoods(Integer ownerId);
 }
 
