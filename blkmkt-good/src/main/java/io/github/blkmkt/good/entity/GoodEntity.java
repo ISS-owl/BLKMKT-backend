@@ -27,11 +27,6 @@ public class GoodEntity implements Serializable {
     @ApiModelProperty(name = "id", value = "货物id")
     private Integer id;
     /**
-     * 货物名称
-     */
-    @ApiModelProperty(name = "name", value = "货物名称")
-    private String name;
-    /**
      * 卖家id
      */
     @ApiModelProperty(name = "ownerId", value = "卖家id")
@@ -46,6 +41,11 @@ public class GoodEntity implements Serializable {
      */
     @ApiModelProperty(name = "gtype", value = "出货收货[0 - 出货, 1 - 收货]")
     private Integer gtype;
+    /**
+     * 是否上架[0 - 上架, 1 - 未上架]
+     */
+    @ApiModelProperty(name = "status", value = "是否上架[0 - 上架, 1 - 未上架]")
+    private Integer status;
     /**
      * 分类
      */

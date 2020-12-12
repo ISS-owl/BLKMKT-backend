@@ -17,11 +17,6 @@ public class GoodModel {
     @ApiModelProperty(name = "id", value = "货物id")
     private Integer id;
     /**
-     * 货物名称
-     */
-    @ApiModelProperty(name = "name", value = "货物名称")
-    private String name;
-    /**
      * 卖家id
      */
     @ApiModelProperty(name = "ownerId", value = "卖家id")
@@ -42,15 +37,10 @@ public class GoodModel {
     @ApiModelProperty(name = "category", value = "分类")
     private String category;
     /**
-     * 总数
+     * 是否有货
      */
-    @ApiModelProperty(name = "totalNum", value = "总数")
-    private Integer totalNum;
-    /**
-     * 当前数量
-     */
-    @ApiModelProperty(name = "currentNum", value = "当前数量")
-    private Integer currentNum;
+    @ApiModelProperty(name = "hasStock", value = "是否有货")
+    private Integer hasStock;
     /**
      * 点赞数
      */

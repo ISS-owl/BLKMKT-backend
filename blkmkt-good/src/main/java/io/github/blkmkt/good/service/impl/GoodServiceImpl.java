@@ -46,6 +46,9 @@ public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements
     public R upGood(GoodEntity good) {
         GoodModel goodModel = new GoodModel();
         BeanUtils.copyProperties(good, goodModel);
+        // 不同的属性
+        Integer hasStock = good.getCurrentNum() > 0? 1 : 0;
+        goodModel.setHasStock(hasStock);
         // 远程调用elasticsearch进行保存
         return saveFeignService.save(Collections.singletonList(goodModel));
     }
