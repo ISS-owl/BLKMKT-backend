@@ -2,6 +2,7 @@ package io.github.blkmkt.good.controller;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import io.github.common.entity.PageParam;
 import io.github.common.utils.R;
@@ -57,6 +58,12 @@ public class GoodController {
     public R updateGood(@RequestBody GoodEntity goodEntity) {
         goodService.updateById(goodEntity);
         return goodService.updateGood(goodEntity);
+    }
+
+    @DeleteMapping("/up")
+    @ApiOperation(value = "删除上架商品", notes = "根据id直接删除上架商品")
+    public R deleteGood(@RequestBody List<Integer> ids) {
+        return goodService.deleteGood(ids);
     }
 
 

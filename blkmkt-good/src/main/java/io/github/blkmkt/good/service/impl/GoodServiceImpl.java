@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 
 @Service("goodService")
@@ -62,6 +63,11 @@ public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements
         goodModel.setHasStock(hasStock);
         goodModel.setUpdateTime(new Date());
         return elasticFeignService.update(Collections.singletonList(goodModel));
+    }
+
+    @Override
+    public R deleteGood(List<Integer> ids) {
+        return elasticFeignService.delete(ids);
     }
 
 }

@@ -6,6 +6,8 @@ import io.github.common.utils.PageUtils;
 import io.github.blkmkt.good.entity.GoodEntity;
 import io.github.common.utils.R;
 
+import java.util.List;
+
 
 /**
  * 货物表
@@ -23,5 +25,7 @@ public interface GoodService extends IService<GoodEntity> {
     R upGood(GoodEntity good);
 
     R updateGood(GoodEntity goodEntity);
+
+    R deleteGood(List<Integer> ids);
 }
 
