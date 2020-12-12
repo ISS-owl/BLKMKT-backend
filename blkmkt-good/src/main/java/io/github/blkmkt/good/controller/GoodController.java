@@ -32,18 +32,17 @@ public class GoodController {
     @Autowired
     private GoodService goodService;
 
-    @Autowired
-    private ElasticSaveFeignService saveFeignService;
-
     @GetMapping("/up/{id}")
     @ApiOperation(value = "商品上架", notes = "根据给定id上架对应的商品")
     public R upGood(@PathVariable Integer id) {
-        // 创建good model
-        GoodEntity good = goodService.getById(id);
-        GoodModel goodModel = new GoodModel();
-        BeanUtils.copyProperties(good, goodModel);
-        // 远程调用elasticsearch进行保存
-        return saveFeignService.save(Collections.singletonList(goodModel));
+        return goodService.upGood(id);
+    }
+
+    @PostMapping("/up")
+    @ApiOperation(value = "创建商品并上架", notes = "根据给定id创建并上架对应的商品")
+    public R upGood(@RequestBody GoodEntity good) {
+        goodService.save(good);
+        return goodService.upGood(good);
     }
 
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.common.entity.PageParam;
 import io.github.common.utils.PageUtils;
 import io.github.blkmkt.good.entity.GoodEntity;
+import io.github.common.utils.R;
 
 
 /**
@@ -16,5 +17,9 @@ import io.github.blkmkt.good.entity.GoodEntity;
 public interface GoodService extends IService<GoodEntity> {
 
     PageUtils<GoodEntity> queryPage(PageParam params);
+
+    R upGood(Integer id);
+
+    R upGood(GoodEntity good);
 }
 
