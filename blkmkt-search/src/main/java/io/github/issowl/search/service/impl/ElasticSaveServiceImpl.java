@@ -31,15 +31,10 @@ public class ElasticSaveServiceImpl implements ElasticSaveService {
         for (GoodModel goodModel : goodModelList) {
             IndexRequest indexRequest = new IndexRequest("goods");
             String s = JSON.toJSONString(goodModel);
+            indexRequest.id(goodModel.getId().toString());
             indexRequest.source(s, XContentType.JSON);
             bulkRequest.add(indexRequest);
         }
-        BulkResponse bulkResponse = restHighLevelClient.bulk(bulkRequest, ElasticSearchConfig.COMMON_OPTIONS);
-        boolean hasFailures = bulkResponse.hasFailures();
-        List<String> collect = Arrays.stream(bulkResponse.getItems()).map(BulkItemResponse::getId).collect(Collectors.toList());
-
-        log.info("商品上架完成：{}",collect);
-
-        return !hasFailures;
+        return CommonServiceImpl.getBulkResponse(bulkRequest, restHighLevelClient);
     }
 }
