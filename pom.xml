@@ -10,6 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>blkmkt-auth-server</module>
+        <module>blkmkt-gateway</module>
         <module>blkmkt-common</module>
         <module>blkmkt-good</module>
         <module>blkmkt-order</module>
@@ -17,7 +19,6 @@
         <module>blkmkt-forum</module>
         <module>renren-fast</module>
         <module>renren-generator</module>
-        <module>blkmkt-common</module>
     </modules>
 
 
