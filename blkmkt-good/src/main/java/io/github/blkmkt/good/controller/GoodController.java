@@ -1,23 +1,17 @@
 package io.github.blkmkt.good.controller;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 
-import io.github.blkmkt.good.feign.ElasticSaveFeignService;
-import io.github.blkmkt.good.vo.GoodModel;
 import io.github.common.entity.PageParam;
 import io.github.common.utils.R;
 import io.swagger.annotations.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import io.github.blkmkt.good.entity.GoodEntity;
 import io.github.blkmkt.good.service.GoodService;
 import io.github.common.utils.PageUtils;
-
-import javax.xml.crypto.Data;
 
 
 /**
@@ -56,6 +50,13 @@ public class GoodController {
 
         goodService.save(good);
         return goodService.upGood(good);
+    }
+
+    @PutMapping("/up")
+    @ApiOperation(value = "更新上架商品", notes = "更新上架商品同时更新数据库")
+    public R updateGood(@RequestBody GoodEntity goodEntity) {
+        goodService.updateById(goodEntity);
+        return goodService.updateGood(goodEntity);
     }
 
 

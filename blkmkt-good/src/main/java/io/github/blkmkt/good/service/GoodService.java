@@ -21,5 +21,7 @@ public interface GoodService extends IService<GoodEntity> {
     R upGood(Integer id);
 
     R upGood(GoodEntity good);
+
+    R updateGood(GoodEntity goodEntity);
 }
 

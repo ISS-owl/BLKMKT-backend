@@ -1,29 +1,29 @@
 package io.github.blkmkt.good.service.impl;
 
-import io.github.blkmkt.good.feign.ElasticSaveFeignService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.github.blkmkt.good.dao.GoodDao;
+import io.github.blkmkt.good.entity.GoodEntity;
+import io.github.blkmkt.good.feign.ElasticFeignService;
+import io.github.blkmkt.good.service.GoodService;
 import io.github.blkmkt.good.vo.GoodModel;
+import io.github.common.entity.PageParam;
+import io.github.common.utils.PageUtils;
+import io.github.common.utils.Query;
 import io.github.common.utils.R;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.github.common.utils.PageUtils;
-import io.github.common.utils.Query;
-import io.github.common.entity.PageParam;
-
-import io.github.blkmkt.good.dao.GoodDao;
-import io.github.blkmkt.good.entity.GoodEntity;
-import io.github.blkmkt.good.service.GoodService;
 
 import java.util.Collections;
+import java.util.Date;
 
 
 @Service("goodService")
 public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements GoodService {
     @Autowired
-    private ElasticSaveFeignService saveFeignService;
+    private ElasticFeignService elasticFeignService;
 
     @Override
     public PageUtils<GoodEntity> queryPage(PageParam params) {
@@ -50,7 +50,18 @@ public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements
         Integer hasStock = good.getCurrentNum() > 0? 1 : 0;
         goodModel.setHasStock(hasStock);
         // 远程调用elasticsearch进行保存
-        return saveFeignService.save(Collections.singletonList(goodModel));
+        return elasticFeignService.save(Collections.singletonList(goodModel));
+    }
+
+    @Override
+    public R updateGood(GoodEntity goodEntity) {
+        GoodModel goodModel = new GoodModel();
+        BeanUtils.copyProperties(goodEntity, goodModel);
+
+        Integer hasStock = goodEntity.getCurrentNum() > 0? 1 : 0;
+        goodModel.setHasStock(hasStock);
+        goodModel.setUpdateTime(new Date());
+        return elasticFeignService.update(Collections.singletonList(goodModel));
     }
 
 }

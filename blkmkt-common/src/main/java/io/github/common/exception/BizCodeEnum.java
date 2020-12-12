@@ -14,6 +14,7 @@ public enum BizCodeEnum {
     TOKEN_ERROR(12005, "Token错误"),
     // Product
     PRODUCT_UP_EXCEPTION(13000, "商品上架失败"),
+    PRODUCT_UPDATE_EXCEPTION(13001, "上架商品更新失败"),
     // Unknown
     UNKNOWN_ERROR(100000, "未知错误");
 
