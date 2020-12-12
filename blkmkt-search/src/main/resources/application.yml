@@ -1,0 +1,10 @@
+server:
+  port: 12000
+
+spring:
+  application:
+    name: blkmkt-search
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.101.64.188:8848

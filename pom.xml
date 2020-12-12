@@ -13,6 +13,7 @@
         <module>blkmkt-auth-server</module>
         <module>blkmkt-gateway</module>
         <module>blkmkt-common</module>
+        <module>blkmkt-search</module>
         <module>blkmkt-good</module>
         <module>blkmkt-order</module>
         <module>blkmkt-user</module>

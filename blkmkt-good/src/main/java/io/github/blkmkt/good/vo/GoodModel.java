@@ -1,23 +1,13 @@
-package io.github.blkmkt.good.entity;
+package io.github.blkmkt.good.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
-import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * 货物表
- *
- * @author Zhihao Shen
- * @email zhihaoshen7@qq.com
- * @date 2020-12-12 08:43:15
- */
+import java.util.Date;
+
 @Data
-@TableName("good")
-public class GoodEntity implements Serializable {
+public class GoodModel {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -91,10 +81,4 @@ public class GoodEntity implements Serializable {
      */
     @ApiModelProperty(name = "subtitle", value = "副标题")
     private String subtitle;
-    /**
-     * 描述
-     */
-    @ApiModelProperty(name = "description", value = "描述")
-    private String description;
-
 }

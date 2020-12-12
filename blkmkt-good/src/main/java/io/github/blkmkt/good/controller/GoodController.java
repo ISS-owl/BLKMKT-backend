@@ -1,10 +1,14 @@
 package io.github.blkmkt.good.controller;
 
 import java.util.Arrays;
+import java.util.Collections;
 
+import io.github.blkmkt.good.feign.ElasticSaveFeignService;
+import io.github.blkmkt.good.vo.GoodModel;
 import io.github.common.entity.PageParam;
 import io.github.common.utils.R;
 import io.swagger.annotations.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +31,21 @@ import io.github.common.utils.PageUtils;
 public class GoodController {
     @Autowired
     private GoodService goodService;
+
+    @Autowired
+    private ElasticSaveFeignService saveFeignService;
+
+    @GetMapping("/up/{id}")
+    @ApiOperation(value = "商品上架", notes = "根据给定id上架对应的商品")
+    public R upGood(@PathVariable Integer id) {
+        // 创建good model
+        GoodEntity good = goodService.getById(id);
+        GoodModel goodModel = new GoodModel();
+        BeanUtils.copyProperties(good, goodModel);
+        // 远程调用elasticsearch进行保存
+        return saveFeignService.save(Collections.singletonList(goodModel));
+    }
+
 
     /**
      * 列表
