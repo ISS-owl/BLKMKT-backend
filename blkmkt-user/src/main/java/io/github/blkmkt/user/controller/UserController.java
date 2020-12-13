@@ -10,10 +10,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-
+import java.util.Date;
 
 
 /**
@@ -58,6 +59,7 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "id", required = true)
     public R info(@PathVariable("id") Integer id){
 		UserEntity user = userService.getById(id);
+		user.setPassword("");   // 防止看到密码
 
         return R.ok().put("user", user);
     }
@@ -69,6 +71,11 @@ public class UserController {
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "user", value = "user entity", required = true)
     public R save(@RequestBody UserEntity user){
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encodePassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodePassword);
 		userService.save(user);
 
         return R.ok();
@@ -81,6 +88,12 @@ public class UserController {
     @ApiOperation(value = "更新信息", notes = "更新信息")
     @ApiImplicitParam(name = "user", value = "user entity", required = true)
     public R update(@RequestBody UserEntity user){
+        user.setUpdateTime(new Date());
+        if (user.getPassword() != null) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String encodePassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(encodePassword);
+        }
 		userService.updateById(user);
 
         return R.ok();
