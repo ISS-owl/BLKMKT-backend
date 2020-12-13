@@ -38,6 +38,7 @@ public class GoodUpController {
     public R upGood(@RequestBody GoodEntity good) {
         // 填充自动计算属性
         good.setStatus(1);  // 上架
+        good.setLikeNum(0);
         good.setCreateTime(new Date());
         good.setUpdateTime(new Date());
 
@@ -57,6 +58,12 @@ public class GoodUpController {
     @ApiOperation(value = "商品下架", notes = "根据id直接删除上架商品")
     @ApiImplicitParam(name = "ids", value = "商品id", required = true)
     public R deleteGood(@RequestBody List<Integer> ids) {
+        // 设置状态为下架
+        for (Integer id : ids) {
+            GoodEntity good = goodService.getById(id);
+            good.setStatus(0);
+            goodService.updateById(good);
+        }
         return goodService.deleteGood(ids);
     }
 

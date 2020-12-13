@@ -65,7 +65,7 @@ public class GoodEntity implements Serializable {
      * 点赞数
      */
     @ApiModelProperty(name = "like", value = "点赞数")
-    private Integer likeNum;
+    private Integer likeNum = 0;
     /**
      * 商品图片的url
      */
