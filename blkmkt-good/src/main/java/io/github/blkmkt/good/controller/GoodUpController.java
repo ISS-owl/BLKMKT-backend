@@ -59,4 +59,15 @@ public class GoodUpController {
     public R deleteGood(@RequestBody List<Integer> ids) {
         return goodService.deleteGood(ids);
     }
+
+    @PutMapping("/like/{id}")
+    @ApiOperation(value = "点赞商品", notes = "给上架的商品点赞")
+    @ApiImplicitParam(name = "id", value = "已上架的商品id", required = true, example = "1")
+    public R likeGood(@PathVariable Integer id) {
+        GoodEntity goodEntity = goodService.getById(id);
+        goodEntity.setLikeNum(goodEntity.getLikeNum() + 1);
+        goodService.updateById(goodEntity);
+
+        return goodService.updateGood(goodEntity);
+    }
 }
