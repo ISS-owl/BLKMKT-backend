@@ -23,7 +23,7 @@ import java.util.Date;
  * @email zhihaoshen7@qq.com
  * @date 2020-12-10 22:26:54
  */
-@Api(tags = {""})
+@Api(tags = {"商品"})
 @RestController
 @RequestMapping("good/good")
 public class GoodController {
