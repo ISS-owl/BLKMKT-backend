@@ -23,4 +23,6 @@ public class SearchParam {
 
     // 页码
     private Integer pageNum = 1;
+
+    private Integer pageSize = 10;
 }

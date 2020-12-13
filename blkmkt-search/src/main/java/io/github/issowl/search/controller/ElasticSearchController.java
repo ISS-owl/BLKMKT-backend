@@ -18,6 +18,6 @@ public class ElasticSearchController {
     @GetMapping(value = "/good")
     public R search(SearchParam searchParam) {
         SearchResult searchResult = elasticSearchService.getSearchResult(searchParam);
-        return R.ok().put("result", searchResult);
+        return R.ok().put("data", searchResult);
     }
 }

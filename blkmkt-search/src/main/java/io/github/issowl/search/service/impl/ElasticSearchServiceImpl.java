@@ -1,9 +1,7 @@
 package io.github.issowl.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import io.github.common.utils.Query;
 import io.github.issowl.search.config.ElasticSearchConfig;
-import io.github.issowl.search.constant.EsConstant;
 import io.github.issowl.search.service.ElasticSearchService;
 import io.github.issowl.search.vo.SearchParam;
 import io.github.issowl.search.vo.SearchResult;
@@ -91,8 +89,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
 
         // 分页
-        searchSourceBuilder.from((searchParam.getPageNum() - 1) * EsConstant.GOOD_PAGE_SIZE);
-        searchSourceBuilder.size(EsConstant.GOOD_PAGE_SIZE);
+        searchSourceBuilder.from((searchParam.getPageNum() - 1) * searchParam.getPageSize());
+        searchSourceBuilder.size(searchParam.getPageSize());
 
         // 高亮
         if (!StringUtils.isEmpty(searchParam.getKeyword())) {
@@ -131,7 +129,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         searchResult.setPageNum(searchParam.getPageNum());
         searchResult.setTotal(hits.getTotalHits().value);
         searchResult.setTotalPages(
-            (int) Math.ceil(1.0 * searchResult.getTotal() / EsConstant.GOOD_PAGE_SIZE)
+            (int) Math.ceil(1.0 * searchResult.getTotal() / searchParam.getPageSize())
         );
 
         return searchResult;
