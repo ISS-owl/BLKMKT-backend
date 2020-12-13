@@ -1,6 +1,6 @@
 package io.github.blkmkt.good.dao;
 
-import io.github.blkmkt.good.entity.GoodCommentReplayEntity;
+import io.github.blkmkt.good.entity.CommentReplayEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,9 +9,9 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-11-15 21:00:52
+ * @date 2020-12-13 19:36:24
  */
 @Mapper
-public interface GoodCommentReplayDao extends BaseMapper<GoodCommentReplayEntity> {
+public interface CommentReplayDao extends BaseMapper<CommentReplayEntity> {
 	
 }

@@ -5,6 +5,8 @@ import io.github.common.entity.PageParam;
 import io.github.common.utils.PageUtils;
 import io.github.blkmkt.good.entity.GoodCommentEntity;
 
+import java.util.List;
+
 
 /**
  * 货物评论
@@ -16,5 +18,7 @@ import io.github.blkmkt.good.entity.GoodCommentEntity;
 public interface GoodCommentService extends IService<GoodCommentEntity> {
 
     PageUtils<GoodCommentEntity> queryPage(PageParam params);
+
+    List<GoodCommentEntity> getCommentEntityByGoodId(Integer id);
 }
 

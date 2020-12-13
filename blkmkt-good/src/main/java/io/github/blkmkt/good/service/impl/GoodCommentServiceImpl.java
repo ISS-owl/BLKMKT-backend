@@ -12,6 +12,8 @@ import io.github.blkmkt.good.dao.GoodCommentDao;
 import io.github.blkmkt.good.entity.GoodCommentEntity;
 import io.github.blkmkt.good.service.GoodCommentService;
 
+import java.util.List;
+
 
 @Service("goodCommentService")
 public class GoodCommentServiceImpl extends ServiceImpl<GoodCommentDao, GoodCommentEntity> implements GoodCommentService {
@@ -24,6 +26,11 @@ public class GoodCommentServiceImpl extends ServiceImpl<GoodCommentDao, GoodComm
         );
 
         return new PageUtils<>(page);
+    }
+
+    @Override
+    public List<GoodCommentEntity> getCommentEntityByGoodId(Integer id) {
+        return this.baseMapper.selectList(new QueryWrapper<GoodCommentEntity>().eq("good_id", id));
     }
 
 }

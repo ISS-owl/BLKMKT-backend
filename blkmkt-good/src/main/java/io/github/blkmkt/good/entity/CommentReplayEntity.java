@@ -5,37 +5,36 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 货物评论
- *
+ * 对评价的回复
+ * 
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
- * @date 2020-12-07 16:12:43
+ * @date 2020-12-13 19:36:24
  */
 @Data
-@TableName("good_comment")
-public class GoodCommentEntity implements Serializable {
+@TableName("comment_replay")
+public class CommentReplayEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * id
 	 */
 	@TableId
-	@ApiModelProperty(name = "id", value = "id", example = "1")
+	@ApiModelProperty(name = "id", value = "id")
 	private Integer id;
 	/**
-	 * 货物id
+	 * 评论id
 	 */
-	@ApiModelProperty(name = "goodId", value = "货物id", example = "2")
-	private Integer goodId;
+	@ApiModelProperty(name = "commentId", value = "评论id")
+	private Integer commentId;
 	/**
 	 * 用户id
 	 */
-	@ApiModelProperty(name = "userId", value = "用户id", example = "3")
+	@ApiModelProperty(name = "userId", value = "用户id")
 	private Integer userId;
 	/**
 	 * 内容
@@ -47,10 +46,10 @@ public class GoodCommentEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "createTime", value = "创建时间")
 	private Date createTime;
-    /**
-     * 更新时间
-     */
-    @ApiModelProperty(name = "updateTime", value = "更新时间")
-    private Date updateTime;
+	/**
+	 * 更新时间
+	 */
+	@ApiModelProperty(name = "updateTime", value = "更新时间")
+	private Date updateTime;
 
 }
