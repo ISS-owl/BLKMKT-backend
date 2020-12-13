@@ -25,7 +25,7 @@ public class ElasticDeleteController {
         try {
             status = deleteService.deleteGoodAsIndices(ids);
         } catch (Exception e) {
-            log.error("远程保存索引失败");
+            log.error("远程删除索引失败");
         }
         if (status){
             return R.ok();

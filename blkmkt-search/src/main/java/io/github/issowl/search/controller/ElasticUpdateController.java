@@ -26,7 +26,7 @@ public class ElasticUpdateController {
         try {
             status = elasticUpdateService.updateGoodAsIndices(goodModelList);
         } catch (Exception e) {
-            log.error("远程保存索引失败");
+            log.error("远程更新索引失败");
         }
         if (status){
             return R.ok();
