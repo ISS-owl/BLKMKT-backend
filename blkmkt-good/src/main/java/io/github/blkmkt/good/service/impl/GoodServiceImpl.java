@@ -71,21 +71,18 @@ public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements
     }
 
     @Override
-    public R getOwnerAllGoods(Integer ownerId) {
-        List<GoodEntity> goods = this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId));
-        return R.ok().put("data", goods);
+    public List<GoodEntity> getOwnerAllGoods(Integer ownerId) {
+        return this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId));
     }
 
     @Override
-    public R getOwnerUpGoods(Integer ownerId) {
-        List<GoodEntity> goods = this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 1));
-        return R.ok().put("data", goods);
+    public List<GoodEntity> getOwnerUpGoods(Integer ownerId) {
+        return this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 1));
     }
 
     @Override
-    public R getOwnerNotUpGoods(Integer ownerId) {
-        List<GoodEntity> goods = this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 0));
-        return R.ok().put("data", goods);
+    public List<GoodEntity> getOwnerNotUpGoods(Integer ownerId) {
+        return this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 0));
     }
 
 }

@@ -28,10 +28,10 @@ public interface GoodService extends IService<GoodEntity> {
 
     R deleteGood(List<Integer> ids);
 
-    R getOwnerAllGoods(Integer ownerId);
+    List<GoodEntity> getOwnerAllGoods(Integer ownerId);
 
-    R getOwnerUpGoods(Integer ownerId);
+    List<GoodEntity> getOwnerUpGoods(Integer ownerId);
 
-    R getOwnerNotUpGoods(Integer ownerId);
+    List<GoodEntity> getOwnerNotUpGoods(Integer ownerId);
 }
 
