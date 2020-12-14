@@ -29,7 +29,7 @@ public class OssController {
 
     @RequestMapping("/oss/policy")
     public R policy() {
-        Map<String, String> respMap = new LinkedHashMap<String, String>();
+        Map<String, String> respMap = new LinkedHashMap<>();
 
         // 基本设置
         String bucket = "gulimall-shzh";

@@ -2,15 +2,10 @@ package io.github.issowl.thirdparty.controller;
 
 import io.github.common.utils.R;
 import io.github.issowl.thirdparty.component.SmsComponent;
-import io.github.issowl.thirdparty.utils.HttpUtils;
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/sms")
