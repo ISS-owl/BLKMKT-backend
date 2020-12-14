@@ -71,7 +71,7 @@ public class GoodCommentController {
      * 根据商品id查询所有评论信息
      */
     @GetMapping("/{good_id}")
-    @ApiOperation(value = "信息", notes = "获取指定id的信息")
+    @ApiOperation(value = "查询商品评论", notes = "根据商品id查询所有评论信息")
     @ApiImplicitParam(name = "good_id", value = "商品id", required = true)
     public R info(@PathVariable("good_id") Integer id){
         List<CommentDetailsVo> commentDetails = new ArrayList<>();
@@ -116,7 +116,7 @@ public class GoodCommentController {
      * 增加评论
      */
     @PostMapping("/")
-    @ApiOperation(value = "评论", notes = "增加评论，包含直接评论和对评论的回复")
+    @ApiOperation(value = "增加评论", notes = "增加评论")
     @ApiImplicitParam(name = "goodComment", value = "goodComment entity", required = true)
     public R save(@RequestBody GoodCommentEntity goodComment){
         goodComment.setCreateTime(new Date());
@@ -130,7 +130,7 @@ public class GoodCommentController {
      * 修改评论
      */
     @PutMapping("/")
-    @ApiOperation(value = "修改评论", notes = "修改评论，包含直接评论和对评论的回复")
+    @ApiOperation(value = "修改评论", notes = "修改评论")
     @ApiImplicitParam(name = "goodComment", value = "goodComment entity", required = true)
     public R update(@RequestBody GoodCommentEntity goodComment){
         goodComment.setUpdateTime(new Date());

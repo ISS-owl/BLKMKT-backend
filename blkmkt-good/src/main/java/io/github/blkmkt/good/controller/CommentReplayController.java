@@ -22,7 +22,7 @@ import io.github.common.utils.PageUtils;
  * @email zhihaoshen7@qq.com
  * @date 2020-12-13 19:36:24
  */
-@Api(tags = {""})
+@Api(tags = {"评论回复"})
 @RestController
 @RequestMapping("good/comment_replay")
 public class CommentReplayController {
@@ -65,7 +65,7 @@ public class CommentReplayController {
      * 添加回复
      */
     @PostMapping("/")
-    @ApiOperation(value = "保存信息", notes = "保存信息")
+    @ApiOperation(value = "添加回复", notes = "添加回复")
     @ApiImplicitParam(name = "commentReplay", value = "commentReplay entity", required = true)
     public R save(@RequestBody CommentReplayEntity commentReplay){
         commentReplay.setCreateTime(new Date());
@@ -79,7 +79,7 @@ public class CommentReplayController {
      * 修改回复
      */
     @PutMapping("/")
-    @ApiOperation(value = "更新信息", notes = "更新信息")
+    @ApiOperation(value = "修改回复", notes = "修改回复")
     @ApiImplicitParam(name = "commentReplay", value = "commentReplay entity", required = true)
     public R update(@RequestBody CommentReplayEntity commentReplay){
         commentReplay.setUpdateTime(new Date());
@@ -92,7 +92,7 @@ public class CommentReplayController {
      * 删除回复
      */
     @DeleteMapping("/")
-    @ApiOperation(value = "删除", notes = "删除信息")
+    @ApiOperation(value = "删除回复", notes = "删除回复")
     @ApiImplicitParam(name = "ids", value = "id array", required = true)
     public R delete(@RequestBody Integer[] ids){
 		commentReplayService.removeByIds(Arrays.asList(ids));
