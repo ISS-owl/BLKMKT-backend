@@ -71,18 +71,33 @@ public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements
     }
 
     @Override
-    public List<GoodEntity> getOwnerAllGoods(Integer ownerId) {
-        return this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId));
+    public PageUtils<GoodEntity> getOwnerAllGoods(PageParam param, Integer ownerId) {
+        IPage<GoodEntity> page = this.page(
+            new Query<GoodEntity>().getPage(param),
+            new QueryWrapper<GoodEntity>().eq("owner_id", ownerId)
+        );
+
+        return new PageUtils<>(page);
     }
 
     @Override
-    public List<GoodEntity> getOwnerUpGoods(Integer ownerId) {
-        return this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 1));
+    public PageUtils<GoodEntity> getOwnerUpGoods(PageParam param, Integer ownerId) {
+        IPage<GoodEntity> page = this.page(
+            new Query<GoodEntity>().getPage(param),
+            new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 1)
+        );
+
+        return new PageUtils<>(page);
     }
 
     @Override
-    public List<GoodEntity> getOwnerNotUpGoods(Integer ownerId) {
-        return this.baseMapper.selectList(new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 0));
+    public PageUtils<GoodEntity> getOwnerNotUpGoods(PageParam param, Integer ownerId) {
+        IPage<GoodEntity> page = this.page(
+            new Query<GoodEntity>().getPage(param),
+            new QueryWrapper<GoodEntity>().eq("owner_id", ownerId).eq("status", 0)
+        );
+
+        return new PageUtils<>(page);
     }
 
 }

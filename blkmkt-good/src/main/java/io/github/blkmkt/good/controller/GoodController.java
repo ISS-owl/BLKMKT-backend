@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -44,7 +43,7 @@ public class GoodController {
             @RequestParam(value = "pageNo", required = false) Long pageNo,
             @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
-        PageParam params = new PageParam(pageNo, pageSize, null, null);
+        PageParam params = new PageParam(pageNo, pageSize);
         PageUtils<GoodEntity> page = goodService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -58,16 +57,25 @@ public class GoodController {
     @ApiOperation(value = "获取用户所属的商品信息", notes = "根据传入的模式不同返回不同的商品信息")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "ownerId", value = "用户id", required = true, example = "1"),
-        @ApiImplicitParam(name = "mode", value = "模式（0-未上架，1-上架，2-全部）", required = true, example = "2")
+        @ApiImplicitParam(name = "mode", value = "模式（0-未上架，1-上架，2-全部）", required = true, example = "2"),
+        @ApiImplicitParam(name = "pageNo", value = "页号（从1开始）", example = "1"),
+        @ApiImplicitParam(name = "pageSize", value = "页面大小", example = "10"),
     })
-    public R getGoodByCondition(@RequestParam Integer ownerId, @RequestParam Integer mode) {
-        List<GoodEntity> goodEntities;
+    public R getGoodByCondition(
+        @RequestParam Integer ownerId,
+        @RequestParam Integer mode,
+        @RequestParam Long pageNo,
+        @RequestParam Long pageSize
+    ) {
+        PageParam param = new PageParam(pageNo, pageSize);
+
+        PageUtils<GoodEntity> goodEntities;
         if (mode == 0) {
-            goodEntities = goodService.getOwnerNotUpGoods(ownerId);
+            goodEntities = goodService.getOwnerNotUpGoods(param, ownerId);
         } else if (mode == 1) {
-            goodEntities = goodService.getOwnerUpGoods(ownerId);
+            goodEntities = goodService.getOwnerUpGoods(param, ownerId);
         } else if (mode == 2) {
-            goodEntities = goodService.getOwnerAllGoods(ownerId);
+            goodEntities = goodService.getOwnerAllGoods(param, ownerId);
         } else {
             goodEntities = null;
         }

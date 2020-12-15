@@ -17,7 +17,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +56,7 @@ public class GoodCommentController {
             @RequestParam(value = "pageNo", required = false) Long pageNo,
             @RequestParam(value = "pageSize", required = false) Long pageSize
     ){
-        PageParam params = new PageParam(pageNo, pageSize, null, null);
+        PageParam params = new PageParam(pageNo, pageSize);
         PageUtils<GoodCommentEntity> page = goodCommentService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -90,7 +89,7 @@ public class GoodCommentController {
         } else if ("create_time".equals(sort)) {
             commentPageParam = new PageParam(pageNo, pageSize, "create_time", "asc");
         } else {
-            commentPageParam = new PageParam(pageNo, pageSize, null, null);
+            commentPageParam = new PageParam(pageNo, pageSize);
         }
         PageUtils<GoodCommentEntity> commentEntityPage = goodCommentService.getCommentEntityByGoodId(commentPageParam, id);
         for (GoodCommentEntity goodCommentEntity : commentEntityPage.getList()) {
@@ -128,7 +127,13 @@ public class GoodCommentController {
             commentDetails.add(commentDetailsVo);
         }
 
-        return R.ok().put("data", commentDetails);
+        PageUtils<CommentDetailsVo> commentDetailsVoPage = new PageUtils<>(
+            commentDetails,
+            commentEntityPage.getTotalCount(),
+            commentEntityPage.getPageSize(),
+            commentEntityPage.getCurrPage()
+        );
+        return R.ok().put("data", commentDetailsVoPage);
     }
 
 

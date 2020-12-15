@@ -18,8 +18,6 @@ import java.util.List;
  */
 public interface GoodService extends IService<GoodEntity> {
 
-    PageUtils<GoodEntity> queryPage(PageParam params);
-
     R upGood(Integer id);
 
     R upGood(GoodEntity good);
@@ -28,10 +26,12 @@ public interface GoodService extends IService<GoodEntity> {
 
     R deleteGood(List<Integer> ids);
 
-    List<GoodEntity> getOwnerAllGoods(Integer ownerId);
+    PageUtils<GoodEntity> queryPage(PageParam params);
 
-    List<GoodEntity> getOwnerUpGoods(Integer ownerId);
+    PageUtils<GoodEntity> getOwnerAllGoods(PageParam param, Integer ownerId);
 
-    List<GoodEntity> getOwnerNotUpGoods(Integer ownerId);
+    PageUtils<GoodEntity> getOwnerUpGoods(PageParam param, Integer ownerId);
+
+    PageUtils<GoodEntity> getOwnerNotUpGoods(PageParam param, Integer ownerId);
 }
 
