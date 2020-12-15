@@ -71,15 +71,29 @@ public class GoodCommentController {
     @ApiOperation(value = "查询商品评论", notes = "根据商品id查询所有评论信息")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "good_id", value = "商品id", required = true),
-        @ApiImplicitParam(name = "sort", value = "降序字段,[like|createTime]", required = false)
+        @ApiImplicitParam(name = "pageNo", value = "当前页数"),
+        @ApiImplicitParam(name = "pageSize", value = "页面大小"),
+        @ApiImplicitParam(name = "sort", value = "排序字段,[like_num|create_time]")
     })
     public R info(
         @PathVariable("good_id") Integer id,
+        @RequestParam(value = "pageNo", required = false) Long pageNo,
+        @RequestParam(value = "pageSize", required = false) Long pageSize,
         @RequestParam(value = "sort", required = false) String sort
     ) {
         List<CommentDetailsVo> commentDetails = new ArrayList<>();
-        List<GoodCommentEntity> commentEntity = goodCommentService.getCommentEntityByGoodId(id);
-        for (GoodCommentEntity goodCommentEntity : commentEntity) {
+
+        // 设置分页参数，包括排序字段和升序/降序
+        PageParam commentPageParam;
+        if ("like_num".equals(sort)) {
+            commentPageParam = new PageParam(pageNo, pageSize, "like_num", "desc");
+        } else if ("create_time".equals(sort)) {
+            commentPageParam = new PageParam(pageNo, pageSize, "create_time", "asc");
+        } else {
+            commentPageParam = new PageParam(pageNo, pageSize, null, null);
+        }
+        PageUtils<GoodCommentEntity> commentEntityPage = goodCommentService.getCommentEntityByGoodId(commentPageParam, id);
+        for (GoodCommentEntity goodCommentEntity : commentEntityPage.getList()) {
             CommentDetailsVo commentDetailsVo = new CommentDetailsVo();
             R userInfoInComment = userFeignService.info(goodCommentEntity.getUserId());
 
@@ -88,8 +102,9 @@ public class GoodCommentController {
             commentDetailsVo.setUsername(userInComment.getName());
             commentDetailsVo.setHeadImgUrl(userInComment.getHeadImgUrl());
             commentDetailsVo.setUserId(userInComment.getId());
-            // 设置评论及回复
+            // 设置评论
             commentDetailsVo.setCommentEntity(goodCommentEntity);
+            // 设置回复
             List<CommentReplayEntity> replaysEntities = commentReplayService.getReplaysByCommentId(goodCommentEntity.getId());
             List<ReplayDetailsVo> replayDetailsVos = new ArrayList<>();
             for (CommentReplayEntity replayEntity : replaysEntities) {
@@ -111,20 +126,6 @@ public class GoodCommentController {
             commentDetailsVo.setReplayEntities(replayDetailsVos);
 
             commentDetails.add(commentDetailsVo);
-        }
-        // 给评论排序
-        if (StringUtils.isEmpty(sort)) {
-            // 默认按照点赞数降序
-            commentDetails.sort((comment1, comment2) -> comment2.getCommentEntity().getLikeNum() - comment1.getCommentEntity().getLikeNum());
-        } else {
-            if ("like".equals(sort)) {
-                // 按点赞数降序
-                commentDetails.sort((comment1, comment2) -> comment2.getCommentEntity().getLikeNum() - comment1.getCommentEntity().getLikeNum());
-            } else if ("createTime".equals(sort)) {
-                // 按创建时间升序
-                commentDetails.sort(Comparator.comparing(comment -> comment.getCommentEntity().getCreateTime()));
-            }
-
         }
 
         return R.ok().put("data", commentDetails);

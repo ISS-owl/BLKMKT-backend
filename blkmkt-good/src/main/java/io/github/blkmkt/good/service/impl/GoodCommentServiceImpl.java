@@ -1,5 +1,6 @@
 package io.github.blkmkt.good.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -29,8 +30,13 @@ public class GoodCommentServiceImpl extends ServiceImpl<GoodCommentDao, GoodComm
     }
 
     @Override
-    public List<GoodCommentEntity> getCommentEntityByGoodId(Integer id) {
-        return this.baseMapper.selectList(new QueryWrapper<GoodCommentEntity>().eq("good_id", id));
+    public PageUtils<GoodCommentEntity> getCommentEntityByGoodId(PageParam params, Integer id) {
+        IPage<GoodCommentEntity> page = this.page(
+            new Query<GoodCommentEntity>().getPage(params),
+            new QueryWrapper<GoodCommentEntity>().eq("good_id", id)
+        );
+
+        return new PageUtils<>(page);
     }
 
 }

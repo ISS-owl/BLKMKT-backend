@@ -19,6 +19,6 @@ public interface GoodCommentService extends IService<GoodCommentEntity> {
 
     PageUtils<GoodCommentEntity> queryPage(PageParam params);
 
-    List<GoodCommentEntity> getCommentEntityByGoodId(Integer id);
+    PageUtils<GoodCommentEntity> getCommentEntityByGoodId(PageParam param, Integer id);
 }
 
