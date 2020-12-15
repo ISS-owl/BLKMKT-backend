@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -63,10 +64,33 @@ public class GoodController {
     }
 
     /**
-     * 保存
+     * 查看商品
+     */
+    @GetMapping("/")
+    @ApiOperation(value = "获取用户所属的商品信息", notes = "根据传入的模式不同返回不同的商品信息")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "ownerId", value = "用户id", required = true, example = "1"),
+        @ApiImplicitParam(name = "mode", value = "模式（0-未上架，1-上架，2-全部）", required = true, example = "2")
+    })
+    public R getGoodByCondition(@RequestParam Integer ownerId, @RequestParam Integer mode) {
+        List<GoodEntity> goodEntities;
+        if (mode == 0) {
+            goodEntities = goodService.getOwnerNotUpGoods(ownerId);
+        } else if (mode == 1) {
+            goodEntities = goodService.getOwnerUpGoods(ownerId);
+        } else if (mode == 2) {
+            goodEntities = goodService.getOwnerAllGoods(ownerId);
+        } else {
+            goodEntities = null;
+        }
+        return R.ok().put("data", goodEntities);
+    }
+
+    /**
+     * 创建商品（未上架）
      */
     @PostMapping("/")
-    @ApiOperation(value = "保存信息", notes = "保存信息")
+    @ApiOperation(value = "创建商品", notes = "创建商品（未上架）")
     @ApiImplicitParam(name = "good", value = "good entity", required = true)
     public R save(@RequestBody GoodEntity good){
         // 填充自动计算属性
@@ -79,10 +103,10 @@ public class GoodController {
     }
 
     /**
-     * 修改
+     * 更新商品（未上架）
      */
     @PutMapping("/")
-    @ApiOperation(value = "更新信息", notes = "更新信息")
+    @ApiOperation(value = "更新商品", notes = "更新商品（未上架）")
     @ApiImplicitParam(name = "good", value = "good entity", required = true)
     public R update(@RequestBody GoodEntity good){
         good.setUpdateTime(new Date());
@@ -92,10 +116,10 @@ public class GoodController {
     }
 
     /**
-     * 删除
+     * 删除商品
      */
     @DeleteMapping("/")
-    @ApiOperation(value = "删除", notes = "删除信息")
+    @ApiOperation(value = "删除商品", notes = "删除商品（未上架）")
     @ApiImplicitParam(name = "ids", value = "id array", required = true)
     public R delete(@RequestBody Integer[] ids){
 		goodService.removeByIds(Arrays.asList(ids));
