@@ -71,7 +71,7 @@ public class GoodCommentController {
     @ApiOperation(value = "查询商品评论", notes = "根据商品id查询所有评论信息")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "good_id", value = "商品id", required = true),
-        @ApiImplicitParam(name = "sort", value = "排序字段,[like|createTime|UpdateTime]_[asc|desc]", required = false)
+        @ApiImplicitParam(name = "sort", value = "降序字段,[like|createTime]", required = false)
     })
     public R info(
         @PathVariable("good_id") Integer id,
@@ -106,14 +106,26 @@ public class GoodCommentController {
 
                 replayDetailsVos.add(replayDetailsVo);
             }
-            // 回复按照创建时间排序
-            replayDetailsVos.sort(Comparator.comparingLong(replay -> replay.getCommentReplayEntity().getCreateTime().getTime()));
+            // 回复按照创建时间升序
+            replayDetailsVos.sort(Comparator.comparing(reply -> reply.getCommentReplayEntity().getCreateTime()));
             commentDetailsVo.setReplayEntities(replayDetailsVos);
 
             commentDetails.add(commentDetailsVo);
         }
-//        // 给评论排序
-//        if (StringUtils.isEmpty(sort) || "")
+        // 给评论排序
+        if (StringUtils.isEmpty(sort)) {
+            // 默认按照点赞数降序
+            commentDetails.sort((comment1, comment2) -> comment2.getCommentEntity().getLikeNum() - comment1.getCommentEntity().getLikeNum());
+        } else {
+            if ("like".equals(sort)) {
+                // 按点赞数降序
+                commentDetails.sort((comment1, comment2) -> comment2.getCommentEntity().getLikeNum() - comment1.getCommentEntity().getLikeNum());
+            } else if ("createTime".equals(sort)) {
+                // 按创建时间升序
+                commentDetails.sort(Comparator.comparing(comment -> comment.getCommentEntity().getCreateTime()));
+            }
+
+        }
 
         return R.ok().put("data", commentDetails);
     }
