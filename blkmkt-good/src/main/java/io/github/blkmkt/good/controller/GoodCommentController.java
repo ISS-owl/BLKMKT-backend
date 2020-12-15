@@ -165,7 +165,7 @@ public class GoodCommentController {
     /**
      * 点赞评论
      */
-    @PostMapping("/{id}")
+    @PutMapping("/like/{id}")
     @ApiOperation(value = "点赞评论", notes = "点赞评论")
     @ApiImplicitParam(name = "id", value = "评论的id", required = true)
     public R like(@PathVariable Integer id) {

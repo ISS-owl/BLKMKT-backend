@@ -91,7 +91,7 @@ public class CommentReplayController {
     /**
      * 点赞回复
      */
-    @PostMapping("/{id}")
+    @PutMapping("/like/{id}")
     @ApiOperation(value = "点赞回复", notes = "点赞回复")
     @ApiImplicitParam(name = "id", value = "回复的id", required = true)
     public R like(@PathVariable Integer id) {
