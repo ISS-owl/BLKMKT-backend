@@ -50,18 +50,6 @@ public class CommentReplayController {
 
 
     /**
-     * 信息
-     */
-    @GetMapping("/{id}")
-    @ApiOperation(value = "信息", notes = "获取指定id的信息")
-    @ApiImplicitParam(name = "id", value = "id", required = true)
-    public R info(@PathVariable("id") Integer id){
-		CommentReplayEntity commentReplay = commentReplayService.getById(id);
-
-        return R.ok().put("commentReplay", commentReplay);
-    }
-
-    /**
      * 添加回复
      */
     @PostMapping("/")

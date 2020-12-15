@@ -52,18 +52,6 @@ public class GoodController {
 
 
     /**
-     * 信息
-     */
-    @GetMapping("/{id}")
-    @ApiOperation(value = "信息", notes = "获取指定id的信息")
-    @ApiImplicitParam(name = "id", value = "id", required = true)
-    public R info(@PathVariable("id") Integer id){
-		GoodEntity good = goodService.getById(id);
-
-        return R.ok().put("good", good);
-    }
-
-    /**
      * 查看商品
      */
     @GetMapping("/")
