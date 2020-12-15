@@ -88,4 +88,18 @@ public class CommentReplayController {
         return R.ok();
     }
 
+    /**
+     * 点赞回复
+     */
+    @PostMapping("/{id}")
+    @ApiOperation(value = "点赞回复", notes = "点赞回复")
+    @ApiImplicitParam(name = "id", value = "回复的id", required = true)
+    public R like(@PathVariable Integer id) {
+        CommentReplayEntity replayEntity = commentReplayService.getById(id);
+        replayEntity.setLikeNum(replayEntity.getLikeNum() + 1);
+        commentReplayService.updateById(replayEntity);
+
+        return R.ok();
+    }
+
 }

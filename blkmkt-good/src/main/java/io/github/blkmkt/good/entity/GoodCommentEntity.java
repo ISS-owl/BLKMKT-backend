@@ -42,6 +42,11 @@ public class GoodCommentEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "content", value = "内容")
 	private String content;
+    /**
+     * 点赞数
+     */
+    @ApiModelProperty(name = "likeNum", value = "点赞数", example = "0")
+    private Integer likeNum;
 	/**
 	 * 创建时间
 	 */

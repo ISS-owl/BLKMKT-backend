@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * 对评价的回复
- * 
+ *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
  * @date 2020-12-13 19:36:24
@@ -41,6 +41,11 @@ public class CommentReplayEntity implements Serializable {
 	 */
 	@ApiModelProperty(name = "content", value = "内容")
 	private String content;
+    /**
+     * 点赞数
+     */
+    @ApiModelProperty(name = "likeNum", value = "点赞数", example = "0")
+    private Integer likeNum;
 	/**
 	 * 创建时间
 	 */

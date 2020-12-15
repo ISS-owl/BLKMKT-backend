@@ -17,14 +17,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
+import java.util.*;
 
 
 /**
@@ -72,8 +69,14 @@ public class GoodCommentController {
      */
     @GetMapping("/{good_id}")
     @ApiOperation(value = "查询商品评论", notes = "根据商品id查询所有评论信息")
-    @ApiImplicitParam(name = "good_id", value = "商品id", required = true)
-    public R info(@PathVariable("good_id") Integer id){
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "good_id", value = "商品id", required = true),
+        @ApiImplicitParam(name = "sort", value = "排序字段,[like|createTime|UpdateTime]_[asc|desc]", required = false)
+    })
+    public R info(
+        @PathVariable("good_id") Integer id,
+        @RequestParam(value = "sort", required = false) String sort
+    ) {
         List<CommentDetailsVo> commentDetails = new ArrayList<>();
         List<GoodCommentEntity> commentEntity = goodCommentService.getCommentEntityByGoodId(id);
         for (GoodCommentEntity goodCommentEntity : commentEntity) {
@@ -103,10 +106,14 @@ public class GoodCommentController {
 
                 replayDetailsVos.add(replayDetailsVo);
             }
+            // 回复按照创建时间排序
+            replayDetailsVos.sort(Comparator.comparingLong(replay -> replay.getCommentReplayEntity().getCreateTime().getTime()));
             commentDetailsVo.setReplayEntities(replayDetailsVos);
 
             commentDetails.add(commentDetailsVo);
         }
+//        // 给评论排序
+//        if (StringUtils.isEmpty(sort) || "")
 
         return R.ok().put("data", commentDetails);
     }
@@ -151,6 +158,20 @@ public class GoodCommentController {
         for (Long id : ids) {
             commentReplayService.deleteAllReplayByCommentId(id);
         }
+
+        return R.ok();
+    }
+
+    /**
+     * 点赞评论
+     */
+    @PostMapping("/{id}")
+    @ApiOperation(value = "点赞评论", notes = "点赞评论")
+    @ApiImplicitParam(name = "id", value = "评论的id", required = true)
+    public R like(@PathVariable Integer id) {
+        GoodCommentEntity commentEntity = goodCommentService.getById(id);
+        commentEntity.setLikeNum(commentEntity.getLikeNum() + 1);
+        goodCommentService.updateById(commentEntity);
 
         return R.ok();
     }
