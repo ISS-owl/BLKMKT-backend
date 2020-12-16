@@ -1,4 +1,4 @@
-FROM java:11
+FROM openjdk:11.0.4
 EXPOSE 8080
 
 VOLUME /tmp
