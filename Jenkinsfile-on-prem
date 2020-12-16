@@ -7,12 +7,23 @@ pipeline {
 
     environment {
         // Github
-        PROJECT_URL = 'https://github.com/ISS-owl/BLKMKT-backend'
+        GITHUB_URL = 'https://github.com/ISS-owl/BLKMKT-backend'
         GITHUB_ACCOUNT = 'Sh-Zh-7'
         GITHUB_CREDENTIALS_ID = '9b65400f-488f-4f79-88e9-1754f2b85c4c'
         // Sonarcube
-        SONAR_CREDENTIAL_ID= 'sonar-token'
+        SONAR_CREDENTIAL_ID = 'sonar-token'
         BRANCH_NAME = 'main'
+        // Aliyun docker registry
+        ALIYUN_USERNAME = 'shzh7'
+        ALIYUN_REGISTRY = 'registry.cn-wulanchabu.aliyuncs.com'
+        ALIYUN_NAMESPACE = 'blkmkt'
+
+    }
+
+    parameters {
+        string(name: 'PROJECT_VERSION', defaultValue: 'v0.0.0', description: '项目版本')
+        string(name: 'PROJECT_NAME', defaultValue: '', description: '项目名称')
+        string(name: 'TARGET_PORT', defaultValue: '', description: '服务端口')
     }
 
     stages {
@@ -27,7 +38,7 @@ pipeline {
                     userRemoteConfigs: [
                         [
                             credentialsId: "${GITHUB_CREDENTIALS_ID}",
-                            url: "${PROJECT_URL}"
+                            url: "${GITHUB_URL}"
                         ]
                     ]
                 ])
@@ -41,17 +52,14 @@ pipeline {
             }
         }
 
-        stage('sonarqube analysis') {
+        stage ('build and deploy') {
             steps {
-                 withCredentials([string(credentialsId: "$SONAR_CREDENTIAL_ID", variable: 'SONAR_TOKEN')]) {
-                    withSonarQubeEnv('sonar') {
-                            sh "mvn sonar:sonar -o -gs `pwd`/mvn_settings.xml -Dsonar.branch=$BRANCH_NAME -Dsonar.login=$SONAR_TOKEN"
-                        }
-                 }
-                 timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                 }
+                sh 'mvn -o -Dmaven.test.skip=true -gs `pwd`/mvn_settings.xml clean package'
+                sh 'cd $PROJECT_NAME && docker build -f `pwd`/Dockerfile -t $PROJECT_NAME:SNAPSHOT'
+                sh 'docker run --name $PROJECT_NAME -p $TARGET_PORT:8080 -d $PROJECT_NAME:SNAPSHOT'
             }
         }
+
+
     }
 }
