@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<<<<<<< HEAD
 <mapper namespace="io.github.blkmkt.good.dao.GoodDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.github.blkmkt.good.entity.GoodEntity" id="goodMap">
+=======
+<mapper namespace="io.github.blkmkt.forum.dao.GoodDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.github.blkmkt.forum.entity.GoodEntity" id="goodMap">
+>>>>>>> 2927ea0 (feat:add forum module)
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="ownerId" column="owner_id"/>
@@ -18,4 +25,8 @@
     </resultMap>
 
 
+<<<<<<< HEAD
 </mapper>
+=======
+</mapper>
+>>>>>>> 2927ea0 (feat:add forum module)
