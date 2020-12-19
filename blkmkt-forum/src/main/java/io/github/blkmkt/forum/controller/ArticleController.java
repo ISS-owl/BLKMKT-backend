@@ -47,6 +47,22 @@ public class ArticleController {
         return R.ok().put("page", page);
     }
 
+    @GetMapping("hot/list")
+    @ApiOperation(value = "所有信息", notes = "根据分页参数（可缺省）获取信息")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
+        @ApiImplicitParam(name = "pageSize", value = "Size of pages")
+    })
+    public R hotList(
+        @RequestParam(value = "pageNo", required = false) Long pageNo,
+        @RequestParam(value = "pageSize", required = false) Long pageSize
+    ){
+        PageParam params = new PageParam(pageNo, pageSize, "like_num", "desc");
+        PageUtils<ArticleEntity> page = articleService.queryPage(params);
+
+        return R.ok().put("page", page);
+    }
+
 
     /**
      * 信息

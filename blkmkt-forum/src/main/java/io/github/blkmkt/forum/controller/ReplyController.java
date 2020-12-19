@@ -70,8 +70,11 @@ public class ReplyController {
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "reply", value = "reply entity", required = true)
     public R save(@RequestBody ReplyEntity reply){
+        int pre = reply.getPreId();
+        ReplyEntity preR = replyService.getById(pre);
+        if(preR.getPreId()==0)reply.setFirstId(preR.getId());
+        else reply.setFirstId(preR.getFirstId());
 		replyService.save(reply);
-
         return R.ok();
     }
 
@@ -147,7 +150,7 @@ public class ReplyController {
     @ApiImplicitParam(name = "id", value = "评论的id", required = true)
     public R undoLike(@PathVariable Integer id) {
         ReplyEntity replyEntity = replyService.getById(id);
-        replyEntity.setLikeNum(replyEntity.getLikeNum()-1);;
+        replyEntity.setLikeNum(replyEntity.getLikeNum()-1);
         replyService.updateById(replyEntity);
         return R.ok();
     }
