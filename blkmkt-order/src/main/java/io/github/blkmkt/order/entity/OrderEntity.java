@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * 订单表
- * 
+ *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
  * @date 2020-12-07 20:22:03
@@ -32,9 +32,23 @@ public class OrderEntity implements Serializable {
 	@ApiModelProperty(name = "goodId", value = "货物id", example = "2")
 	private Integer goodId;
 	/**
-	 * 用户id
-	 */
-	@ApiModelProperty(name = "userId", value = "用户id", example = "3")
-	private Integer userId;
-
+     * 消费者id
+     */
+    @ApiModelProperty(name = "consumerId", value = "消费者id", example = "3")
+    private Integer consumerId;
+    /**
+     * 支付方式[1->支付宝; 2->微信; 3->货到付款]
+     */
+    @ApiModelProperty(name = "payType", value = "支付方式", example = "3")
+    private Integer payType;
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(name = "createTime", value = "创建时间")
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    @ApiModelProperty(name = "updateTime", value = "更新时间")
+    private Date updateTime;
 }

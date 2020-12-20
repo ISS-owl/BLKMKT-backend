@@ -1,17 +1,21 @@
 package io.github.blkmkt.order.controller;
 
-import java.util.Arrays;
-
+import io.github.blkmkt.order.entity.OrderEntity;
+import io.github.blkmkt.order.feign.GoodFeignService;
+import io.github.blkmkt.order.feign.UserFeignService;
+import io.github.blkmkt.order.service.OrderService;
 import io.github.common.entity.PageParam;
+import io.github.common.utils.PageUtils;
 import io.github.common.utils.R;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import io.github.blkmkt.order.entity.OrderEntity;
-import io.github.blkmkt.order.service.OrderService;
-import io.github.common.utils.PageUtils;
-
+import java.util.Arrays;
+import java.util.Date;
 
 
 /**
@@ -27,6 +31,12 @@ import io.github.common.utils.PageUtils;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    GoodFeignService goodFeignService;
+
+    @Autowired
+    UserFeignService userFeignService;
 
     /**
      * 列表
@@ -67,6 +77,8 @@ public class OrderController {
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "order", value = "order entity", required = true)
     public R save(@RequestBody OrderEntity order){
+        order.setCreateTime(new Date());
+        order.setUpdateTime(new Date());
 		orderService.save(order);
 
         return R.ok();
@@ -79,6 +91,7 @@ public class OrderController {
     @ApiOperation(value = "更新信息", notes = "更新信息")
     @ApiImplicitParam(name = "order", value = "order entity", required = true)
     public R update(@RequestBody OrderEntity order){
+        order.setUpdateTime(new Date());
 		orderService.updateById(order);
 
         return R.ok();
