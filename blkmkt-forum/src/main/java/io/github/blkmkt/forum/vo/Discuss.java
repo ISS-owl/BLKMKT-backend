@@ -6,8 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Discuss
-{
+public class Discuss {
     List<Discuss> next;
     List<ReplyEntity> replyEntities;
 }

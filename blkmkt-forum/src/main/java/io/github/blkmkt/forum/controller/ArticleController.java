@@ -13,23 +13,12 @@ import io.github.blkmkt.forum.service.ArticleService;
 import io.github.common.utils.PageUtils;
 
 
-
-/**
- * 
- *
-<<<<<<< HEAD
- * @author Zhihao Shen
- * @email zhihaoshen7@qq.com
- * @date 2020-12-19 12:53:38
- */
-@Api(tags = {""})
-=======
+/*
  * @author YuNing Wu
  * @email 414085716@qq.com
  * @date 2020-12-19 12:53:38
  */
 @Api(tags = {"文章"})
->>>>>>> 6ae64d4 (feat:complete forum module)
 @RestController
 @RequestMapping("forum/article")
 public class ArticleController {
@@ -56,11 +45,7 @@ public class ArticleController {
     }
 
     @GetMapping("hot/list")
-<<<<<<< HEAD
-    @ApiOperation(value = "所有信息", notes = "根据分页参数（可缺省）获取信息")
-=======
     @ApiOperation(value = "按点赞数排序所有信息", notes = "根据分页参数（可缺省）获取信息")
->>>>>>> 6ae64d4 (feat:complete forum module)
     @ApiImplicitParams({
         @ApiImplicitParam(name = "pageNo", value = "Number of pages"),
         @ApiImplicitParam(name = "pageSize", value = "Size of pages")
