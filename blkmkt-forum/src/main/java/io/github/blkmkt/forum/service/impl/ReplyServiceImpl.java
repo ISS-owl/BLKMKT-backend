@@ -42,16 +42,18 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyDao, ReplyEntity> impleme
         return new PageUtils<>(page);
     }
 
-    public List<ReplyEntity> getDiscuss(Integer id){
+    public PageUtils<ReplyEntity> getDiscuss(PageParam param, Integer id){
         Discuss discuss = new Discuss();
         ReplyEntity replyEntity = replyDao.selectById(id);
         int firstid = replyEntity.getFirstId();
         if(firstid==0){
             return null;
         }
-        List<ReplyEntity> replyEntityList = replyDao.selectList(new QueryWrapper<ReplyEntity>().eq("first",firstid));
-        replyEntityList.sort(Comparator.comparing(reply -> reply.getDate()));
-        return replyEntityList;
+        IPage<ReplyEntity> page = this.page(
+            new Query<ReplyEntity>().getPage(param),
+            new QueryWrapper<ReplyEntity>().eq("first_id",firstid)
+        );
+        return new PageUtils<>(page);
     }
 
 }

@@ -114,7 +114,7 @@ public class ReplyController {
         @RequestParam Long pageNo,
         @RequestParam Long pageSize
     ) {
-        PageParam PageParam = new PageParam(pageNo, pageSize,"data", "asc");
+        PageParam PageParam = new PageParam(pageNo, pageSize,"date", "asc");
         PageUtils<ReplyEntity> replyEntityPage = replyService.getReplyEntityByArticleId(PageParam, id);
 
         List<ReplyEntity> replyEntities = replyEntityPage.getList();
@@ -124,10 +124,17 @@ public class ReplyController {
 
     @GetMapping("getDiscuss/{id}")
     @ApiOperation(value = "回复上下文", notes = "获取指定id的回复相关的所有回复")
-    @ApiImplicitParam(name = "id", value = "回复id", required = true)
-    public R getDiscuss(@PathVariable("id") Integer id){
-        List<ReplyEntity> replyEntities = replyService.getDiscuss(id);
-
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "回复id", required = true),
+        @ApiImplicitParam(name = "pageNo", value = "当前页数"),
+        @ApiImplicitParam(name = "pageSize", value = "页面大小")
+    })
+    public R getDiscuss(@PathVariable("id") Integer id,
+        @RequestParam Long pageNo,
+        @RequestParam Long pageSize){
+        PageParam PageParam = new PageParam(pageNo, pageSize,"date", "asc");
+        PageUtils<ReplyEntity> replyEntityPage = replyService.getReplyEntityByArticleId(PageParam, id);
+        List<ReplyEntity> replyEntities = replyEntityPage.getList();
         return R.ok().put("discuss", replyEntities);
     }
 

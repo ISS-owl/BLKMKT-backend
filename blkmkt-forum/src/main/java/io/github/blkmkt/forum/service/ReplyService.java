@@ -21,6 +21,6 @@ public interface ReplyService extends IService<ReplyEntity> {
 
     PageUtils<ReplyEntity> getReplyEntityByArticleId(PageParam param, Integer id);
 
-    public List<ReplyEntity> getDiscuss(Integer id);
+    PageUtils<ReplyEntity> getDiscuss(PageParam param, Integer id);
 }
 
