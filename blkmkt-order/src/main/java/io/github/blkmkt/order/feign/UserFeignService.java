@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(value = "blkmkt-user")
 public interface UserFeignService {
-    @GetMapping("/{id}")
+    @GetMapping("/user/user/{id}")
     R info(@PathVariable("id") Integer id);
 
 }

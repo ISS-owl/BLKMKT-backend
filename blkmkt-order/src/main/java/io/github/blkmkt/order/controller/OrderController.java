@@ -1,10 +1,15 @@
 package io.github.blkmkt.order.controller;
 
+import com.alibaba.fastjson.TypeReference;
 import io.github.blkmkt.order.entity.OrderEntity;
 import io.github.blkmkt.order.feign.GoodFeignService;
 import io.github.blkmkt.order.feign.UserFeignService;
 import io.github.blkmkt.order.service.OrderService;
+import io.github.blkmkt.order.vo.ConfirmVo;
+import io.github.blkmkt.order.vo.GoodVo;
+import io.github.blkmkt.order.vo.UserVo;
 import io.github.common.entity.PageParam;
+import io.github.common.exception.BizCodeEnum;
 import io.github.common.utils.PageUtils;
 import io.github.common.utils.R;
 import io.swagger.annotations.Api;
@@ -12,10 +17,16 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -33,10 +44,16 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    GoodFeignService goodFeignService;
+    private ThreadPoolExecutor executor;
 
     @Autowired
-    UserFeignService userFeignService;
+    private UserFeignService userFeignService;
+
+    @Autowired
+    private GoodFeignService goodFeignService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     /**
      * 列表
@@ -70,6 +87,42 @@ public class OrderController {
         return R.ok().put("order", order);
     }
 
+    @GetMapping("/confirm")
+    @ApiOperation(value = "确认订单", notes = "返回用户信息和商品信息，让用户确认")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "consumerId", value = "消费者id"),
+        @ApiImplicitParam(name = "goodId", value = "商品id")
+    })
+    public R confirm(@RequestParam Integer consumerId, @RequestParam Integer goodId) {
+        // 保证接口幂等性
+        ConfirmVo confirmVo = new ConfirmVo();
+
+        // 异步获取用户和商品信息
+        CompletableFuture<Void> userCompletableFuture = CompletableFuture.runAsync(() -> {
+            R userInfo = userFeignService.info(consumerId);
+            UserVo user = userInfo.getData("user", new TypeReference<>() {});
+            confirmVo.setConsumer(user);
+        }, executor);
+
+        CompletableFuture<Void> goodCompletableFuture = CompletableFuture.runAsync(() -> {
+            R goodInfo = goodFeignService.info(goodId);
+            GoodVo good = goodInfo.getData("good", new TypeReference<>() {});
+            confirmVo.setGood(good);
+        }, executor);
+
+        // 设置防重令牌
+        String token = UUID.randomUUID().toString().replace("-", "");
+        redisTemplate.opsForValue().set("order:token" + consumerId, token, 30, TimeUnit.MINUTES);
+        confirmVo.setOrderToken(token);
+        try {
+            CompletableFuture.allOf(userCompletableFuture, goodCompletableFuture).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return R.ok().put("data", confirmVo);
+    }
+
     /**
      * 保存
      */
@@ -77,6 +130,17 @@ public class OrderController {
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "order", value = "order entity", required = true)
     public R save(@RequestBody OrderEntity order){
+        // 请求购买的商品数量不能超过商品现存的数量
+        // TODO: 改用ware远程调用
+        R goodInfo = goodFeignService.info(order.getGoodId());
+        GoodVo good = goodInfo.getData("good", new TypeReference<>() {});
+        if (good.getCurrentNum() < order.getGoodNum()) {
+            return R.error(
+                BizCodeEnum.ORDER_NUM_NOT_ENOUGH.getCode(),
+                BizCodeEnum.ORDER_NUM_NOT_ENOUGH.getMsg()
+            );
+        }
+        // 保存订单
         order.setCreateTime(new Date());
         order.setUpdateTime(new Date());
 		orderService.save(order);

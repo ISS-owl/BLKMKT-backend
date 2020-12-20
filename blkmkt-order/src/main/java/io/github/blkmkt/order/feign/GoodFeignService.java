@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(value = "blkmkt-good")
 public interface GoodFeignService {
-    @GetMapping("/{id}")
+    @GetMapping("good/good/{id}")
     R info(@PathVariable("id") Integer id);
 }
