@@ -19,10 +19,7 @@
         <module>blkmkt-gateway</module>
         <module>blkmkt-common</module>
         <module>blkmkt-search</module>
-<<<<<<< HEAD
-=======
 		<module>blkmkt-forum</module>
->>>>>>> 2b49c7b (feat:add forum module)
         <module>blkmkt-good</module>
         <module>blkmkt-order</module>
         <module>blkmkt-user</module>

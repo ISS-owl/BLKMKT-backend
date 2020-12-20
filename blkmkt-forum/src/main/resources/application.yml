@@ -1,13 +1,13 @@
 server:
-    port: 8080
+    port: 11000
 
 spring:
     application:
         name: blkmkt-forum
     datasource:
         username: root
-        password: 123456
-        url: jdbc:mysql://localhost:3306/forum?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        password: root
+        url: jdbc:mysql://39.101.64.188:3306/blkmkt_forum?useUnicode=true&characterEncoding=utf8
         driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:
