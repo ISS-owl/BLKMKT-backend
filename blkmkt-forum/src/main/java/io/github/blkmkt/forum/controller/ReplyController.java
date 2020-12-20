@@ -114,11 +114,10 @@ public class ReplyController {
         @RequestParam Long pageNo,
         @RequestParam Long pageSize
     ) {
-        PageParam PageParam = new PageParam(pageNo, pageSize);
+        PageParam PageParam = new PageParam(pageNo, pageSize,"data", "asc");
         PageUtils<ReplyEntity> replyEntityPage = replyService.getReplyEntityByArticleId(PageParam, id);
 
         List<ReplyEntity> replyEntities = replyEntityPage.getList();
-        replyEntities.sort(Comparator.comparing(reply -> reply.getDate()));
 
         return R.ok().put("data", replyEntities);
     }
