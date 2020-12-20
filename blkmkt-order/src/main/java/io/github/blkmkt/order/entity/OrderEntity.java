@@ -42,6 +42,11 @@ public class OrderEntity implements Serializable {
     @ApiModelProperty(name = "payType", value = "支付方式", example = "3")
     private Integer payType;
     /**
+     * 购买数量
+     */
+    @ApiModelProperty(name = "goodNum", value = "购买数量", example = "1")
+    private Integer goodNum = 1;
+    /**
      * 创建时间
      */
     @ApiModelProperty(name = "createTime", value = "创建时间")
