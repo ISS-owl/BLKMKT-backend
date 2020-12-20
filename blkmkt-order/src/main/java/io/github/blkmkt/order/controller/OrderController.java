@@ -2,12 +2,12 @@ package io.github.blkmkt.order.controller;
 
 import com.alibaba.fastjson.TypeReference;
 import io.github.blkmkt.order.entity.OrderEntity;
+import io.github.blkmkt.order.exception.NoStockException;
 import io.github.blkmkt.order.feign.GoodFeignService;
 import io.github.blkmkt.order.feign.UserFeignService;
+import io.github.blkmkt.order.feign.WareFeignService;
 import io.github.blkmkt.order.service.OrderService;
-import io.github.blkmkt.order.vo.ConfirmVo;
-import io.github.blkmkt.order.vo.GoodVo;
-import io.github.blkmkt.order.vo.UserVo;
+import io.github.blkmkt.order.vo.*;
 import io.github.common.entity.PageParam;
 import io.github.common.exception.BizCodeEnum;
 import io.github.common.utils.PageUtils;
@@ -16,11 +16,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -54,6 +57,9 @@ public class OrderController {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private WareFeignService wareFeignService;
 
     /**
      * 列表
@@ -127,23 +133,47 @@ public class OrderController {
      * 保存
      */
     @PostMapping("/")
-    @ApiOperation(value = "保存信息", notes = "保存信息")
+    @ApiOperation(value = "保存订单", notes = "保存订单信息")
     @ApiImplicitParam(name = "order", value = "order entity", required = true)
-    public R save(@RequestBody OrderEntity order){
-        // 请求购买的商品数量不能超过商品现存的数量
-        // TODO: 改用ware远程调用
-        R goodInfo = goodFeignService.info(order.getGoodId());
-        GoodVo good = goodInfo.getData("good", new TypeReference<>() {});
-        if (good.getCurrentNum() < order.getGoodNum()) {
+    public R save(@RequestBody OrderSubmitVo orderSubmitVo){
+        // 校验防重令牌
+        Integer consumerId = orderSubmitVo.getConsumerId();
+        String script= "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+        Long execute = redisTemplate.execute(
+            new DefaultRedisScript<>(script, Long.class),
+            Collections.singletonList("order:token" + consumerId),
+            orderSubmitVo.getToken()
+        );
+        if (execute == 0) {
+            // 校验失败
             return R.error(
-                BizCodeEnum.ORDER_NUM_NOT_ENOUGH.getCode(),
-                BizCodeEnum.ORDER_NUM_NOT_ENOUGH.getMsg()
+                BizCodeEnum.ORDER_DUPLICATE_SUBMIT_EXCEPTION.getCode(),
+                BizCodeEnum.ORDER_DUPLICATE_SUBMIT_EXCEPTION.getMsg()
             );
         }
+
         // 保存订单
-        order.setCreateTime(new Date());
-        order.setUpdateTime(new Date());
-		orderService.save(order);
+        OrderEntity orderEntity = new OrderEntity();
+        BeanUtils.copyProperties(orderSubmitVo, orderEntity);
+        orderEntity.setCreateTime(new Date());
+        orderEntity.setUpdateTime(new Date());
+		orderService.save(orderEntity);
+
+		// 获取商品信息
+        R goodInfo = goodFeignService.info(orderSubmitVo.getGoodId());
+        GoodVo good = goodInfo.getData("good", new TypeReference<>() {});
+        // 锁定库存
+        WareLockOrderVo wareLockOrderVo = new WareLockOrderVo();
+        wareLockOrderVo.setLockedGood(good);
+        wareLockOrderVo.setOrderId(orderEntity.getId());
+        wareLockOrderVo.setGoodNum(orderEntity.getGoodNum());
+        R response = wareFeignService.lockOrder(wareLockOrderVo);
+        if ((int)response.get("code") == 200) {
+            // TODO: 消息队列发送消息
+        } else {
+            String msg = response.get("msg").toString();
+            throw new NoStockException(msg);
+        }
 
         return R.ok();
     }

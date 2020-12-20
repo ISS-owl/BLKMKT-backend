@@ -16,7 +16,7 @@ import lombok.Data;
  * @date 2020-12-07 20:22:03
  */
 @Data
-@TableName("order")
+@TableName("`order`")
 public class OrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,12 @@ public class OrderEntity implements Serializable {
      * 购买数量
      */
     @ApiModelProperty(name = "goodNum", value = "购买数量", example = "1")
-    private Integer goodNum = 1;
+    private Integer goodNum;
+    /**
+     * 应付总金额
+     */
+    @ApiModelProperty(name = "totalPrice", value = "应付总金额", example = "100")
+    private Integer totalPrice;
     /**
      * 创建时间
      */

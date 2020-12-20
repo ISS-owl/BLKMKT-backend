@@ -2,7 +2,10 @@ package io.github.blkmkt.ware.controller;
 
 import java.util.Arrays;
 
+import io.github.blkmkt.ware.exception.NoStockException;
+import io.github.blkmkt.ware.vo.WareLockOrderVo;
 import io.github.common.entity.PageParam;
+import io.github.common.exception.BizCodeEnum;
 import io.github.common.utils.R;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,20 @@ import io.github.common.utils.PageUtils;
 public class WareOrderController {
     @Autowired
     private WareOrderService wareOrderService;
+
+    @PostMapping("/lock")
+    public R lockOrder(@RequestBody WareLockOrderVo wareLockOrderVo) {
+        try {
+            wareOrderService.orderLockStock(wareLockOrderVo);
+            return R.ok();
+        } catch (NoStockException e) {
+            return R.error(
+                BizCodeEnum.ORDER_NUM_NOT_ENOUGH.getCode(),
+                BizCodeEnum.ORDER_NUM_NOT_ENOUGH.getMsg()
+            );
+        }
+    }
+
 
     /**
      * 列表

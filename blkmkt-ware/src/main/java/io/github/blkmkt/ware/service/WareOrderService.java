@@ -1,6 +1,7 @@
 package io.github.blkmkt.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.github.blkmkt.ware.vo.WareLockOrderVo;
 import io.github.common.entity.PageParam;
 import io.github.common.utils.PageUtils;
 import io.github.blkmkt.ware.entity.WareOrderEntity;
@@ -16,5 +17,7 @@ import io.github.blkmkt.ware.entity.WareOrderEntity;
 public interface WareOrderService extends IService<WareOrderEntity> {
 
     PageUtils<WareOrderEntity> queryPage(PageParam params);
+
+    Boolean orderLockStock(WareLockOrderVo wareLockOrderVo);
 }
 

@@ -2,15 +2,14 @@ package io.github.blkmkt.ware.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
-import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 商品订单信息
- * 
+ *
  * @author Zhihao Shen
  * @email zhihaoshen7@qq.com
  * @date 2020-12-20 23:12:37

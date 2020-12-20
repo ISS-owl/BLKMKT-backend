@@ -12,5 +12,16 @@
         <result property="lockStatus" column="lock_status"/>
     </resultMap>
 
+    <select id="hasStock" resultType="java.lang.Integer">
+        SELECT `id` FROM  ware_good
+        WHERE `good_id`=#{goodId} AND `stock_num` - `stock_locked` >= #{goodNum}
+    </select>
+
+    <update id="lockStock">
+        UPDATE ware_good
+        SET `stock_locked`=`stock_locked` + #{goodNum}
+        WHERE `good_id`=#{goodId}
+        AND `stock_num` - `stock_locked` > #{goodNum}
+    </update>
 
 </mapper>

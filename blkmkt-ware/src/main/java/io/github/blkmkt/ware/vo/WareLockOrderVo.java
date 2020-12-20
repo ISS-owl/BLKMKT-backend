@@ -1,4 +1,4 @@
-package io.github.blkmkt.order.vo;
+package io.github.blkmkt.ware.vo;
 
 import lombok.Data;
 
