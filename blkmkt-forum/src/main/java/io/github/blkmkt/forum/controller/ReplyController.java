@@ -117,7 +117,7 @@ public class ReplyController {
     public R getReplyByArticleId(
         @PathVariable("article_id") Integer id,
         @RequestParam(value = "pageNo", required = false) Long pageNo,
-        @RequestParam(value = "pageNo", required = false) Long pageSize
+        @RequestParam(value = "pageSize", required = false) Long pageSize
     ) {
         PageParam PageParam = new PageParam(pageNo, pageSize,"date", "asc");
         PageUtils<ReplyEntity> replyEntityPage = replyService.getReplyEntityByArticleId(PageParam, id);
@@ -136,7 +136,7 @@ public class ReplyController {
     })
     public R getDiscuss(@PathVariable("id") Integer id,
         @RequestParam(value = "pageNo", required = false) Long pageNo,
-        @RequestParam(value = "pageNo", required = false) Long pageSize){
+        @RequestParam(value = "pageSize", required = false) Long pageSize){
         PageParam PageParam = new PageParam(pageNo, pageSize,"date", "asc");
         PageUtils<ReplyEntity> replyEntityPage = replyService.getDiscuss(PageParam, id);
         List<ReplyEntity> replyEntities = replyEntityPage.getList();
