@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: blkmkt-good
+    name: blkmkt-product
   cloud:
     nacos:
       discovery:

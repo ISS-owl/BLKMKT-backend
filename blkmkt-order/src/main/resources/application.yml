@@ -14,7 +14,15 @@ spring:
     url: jdbc:mysql://39.101.64.188:3306/blkmkt_order?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
-      host: 39.101.64.188
+    host: 39.101.64.188
+  rabbitmq:
+    host: 39.101.64.188
+    username: admin
+    password: admin
+    listener:
+      simple:
+        acknowledge-mode: manual
+    virtual-host: /
 
 blkmkt:
   thread:

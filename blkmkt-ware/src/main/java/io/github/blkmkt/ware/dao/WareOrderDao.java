@@ -18,4 +18,6 @@ public interface WareOrderDao extends BaseMapper<WareOrderEntity> {
     Integer hasStock(@Param("goodId") Integer goodId, @Param("goodNum") Integer goodNum);
 
     void lockStock(@Param("goodId") Integer goodId, @Param("goodNum") Integer goodNum);
+
+    void unlockStock(@Param("goodId") Integer goodId, @Param("goodNum") Integer goodNum);
 }

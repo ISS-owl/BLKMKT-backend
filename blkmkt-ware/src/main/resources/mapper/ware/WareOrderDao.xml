@@ -24,4 +24,10 @@
         AND `stock_num` - `stock_locked` > #{goodNum}
     </update>
 
+    <update id="unlockStock">
+        UPDATE ware_good
+        SET `stock_locked`=`stock_locked` - #{goodNum}
+        WHERE `good_id`=#{goodId}
+    </update>
+
 </mapper>

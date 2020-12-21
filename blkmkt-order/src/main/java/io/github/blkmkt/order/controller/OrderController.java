@@ -2,6 +2,7 @@ package io.github.blkmkt.order.controller;
 
 import com.alibaba.fastjson.TypeReference;
 import io.github.blkmkt.order.entity.OrderEntity;
+import io.github.blkmkt.order.enums.OrderStatusEnum;
 import io.github.blkmkt.order.exception.NoStockException;
 import io.github.blkmkt.order.feign.GoodFeignService;
 import io.github.blkmkt.order.feign.UserFeignService;
@@ -16,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -61,6 +63,9 @@ public class OrderController {
     @Autowired
     private WareFeignService wareFeignService;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     /**
      * 列表
      */
@@ -104,16 +109,16 @@ public class OrderController {
         ConfirmVo confirmVo = new ConfirmVo();
 
         // 异步获取用户和商品信息
-        CompletableFuture<Void> userCompletableFuture = CompletableFuture.runAsync(() -> {
-            R userInfo = userFeignService.info(consumerId);
-            UserVo user = userInfo.getData("user", new TypeReference<>() {});
-            confirmVo.setConsumer(user);
-        }, executor);
-
         CompletableFuture<Void> goodCompletableFuture = CompletableFuture.runAsync(() -> {
             R goodInfo = goodFeignService.info(goodId);
             GoodVo good = goodInfo.getData("good", new TypeReference<>() {});
             confirmVo.setGood(good);
+        }, executor);
+
+        CompletableFuture<Void> userCompletableFuture = CompletableFuture.runAsync(() -> {
+            R userInfo = userFeignService.info(consumerId);
+            UserVo user = userInfo.getData("user", new TypeReference<>() {});
+            confirmVo.setConsumer(user);
         }, executor);
 
         // 设置防重令牌
@@ -157,6 +162,7 @@ public class OrderController {
         BeanUtils.copyProperties(orderSubmitVo, orderEntity);
         orderEntity.setCreateTime(new Date());
         orderEntity.setUpdateTime(new Date());
+        orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
 		orderService.save(orderEntity);
 
 		// 获取商品信息
@@ -169,7 +175,7 @@ public class OrderController {
         wareLockOrderVo.setGoodNum(orderEntity.getGoodNum());
         R response = wareFeignService.lockOrder(wareLockOrderVo);
         if ((int)response.get("code") == 200) {
-            // TODO: 消息队列发送消息
+            rabbitTemplate.convertAndSend("order-event-exchange","order.create.order", orderEntity);
         } else {
             String msg = response.get("msg").toString();
             throw new NoStockException(msg);
