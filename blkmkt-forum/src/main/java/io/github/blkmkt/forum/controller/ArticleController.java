@@ -1,6 +1,7 @@
 package io.github.blkmkt.forum.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import io.github.common.entity.PageParam;
 import io.github.common.utils.R;
@@ -80,6 +81,7 @@ public class ArticleController {
     @ApiOperation(value = "保存信息", notes = "保存信息")
     @ApiImplicitParam(name = "article", value = "article entity", required = true)
     public R save(@RequestBody ArticleEntity article){
+        article.setDate(new Date());
 		articleService.save(article);
 
         return R.ok();

@@ -1,9 +1,6 @@
 package io.github.blkmkt.forum.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import io.github.common.entity.PageParam;
 import io.github.common.utils.R;
@@ -70,9 +67,17 @@ public class ReplyController {
     @ApiImplicitParam(name = "reply", value = "reply entity", required = true)
     public R save(@RequestBody ReplyEntity reply){
         int pre = reply.getPreId();
-        ReplyEntity preR = replyService.getById(pre);
-        if(preR.getPreId()==0)reply.setFirstId(preR.getId());
-        else reply.setFirstId(preR.getFirstId());
+        //if not first
+        if(pre!=0){
+            ReplyEntity preR = replyService.getById(pre);
+            //if second
+            if(preR.getPreId()==0)reply.setFirstId(preR.getId());
+            else reply.setFirstId(preR.getFirstId());
+        }else{
+            reply.setPreId(0);
+            reply.setFirstId(0);
+        }
+        reply.setDate(new Date());
 		replyService.save(reply);
         return R.ok();
     }
@@ -103,7 +108,7 @@ public class ReplyController {
 
 
     @GetMapping("/fromArticle/{article_id}")
-    @ApiOperation(value = "获取某个文章的所有回复信息", notes = "获取某个文章的所有回复信息")
+    @ApiOperation(value = "获取某个文章的所有回复信息", notes = "根据分页参数（可缺省）获取某个文章的所有回复信息")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "article_id", value = "文章id", required = true),
         @ApiImplicitParam(name = "pageNo", value = "当前页数"),
@@ -111,8 +116,8 @@ public class ReplyController {
     })
     public R getReplyByArticleId(
         @PathVariable("article_id") Integer id,
-        @RequestParam Long pageNo,
-        @RequestParam Long pageSize
+        @RequestParam(value = "pageNo", required = false) Long pageNo,
+        @RequestParam(value = "pageNo", required = false) Long pageSize
     ) {
         PageParam PageParam = new PageParam(pageNo, pageSize,"date", "asc");
         PageUtils<ReplyEntity> replyEntityPage = replyService.getReplyEntityByArticleId(PageParam, id);
@@ -130,10 +135,10 @@ public class ReplyController {
         @ApiImplicitParam(name = "pageSize", value = "页面大小")
     })
     public R getDiscuss(@PathVariable("id") Integer id,
-        @RequestParam Long pageNo,
-        @RequestParam Long pageSize){
+        @RequestParam(value = "pageNo", required = false) Long pageNo,
+        @RequestParam(value = "pageNo", required = false) Long pageSize){
         PageParam PageParam = new PageParam(pageNo, pageSize,"date", "asc");
-        PageUtils<ReplyEntity> replyEntityPage = replyService.getReplyEntityByArticleId(PageParam, id);
+        PageUtils<ReplyEntity> replyEntityPage = replyService.getDiscuss(PageParam, id);
         List<ReplyEntity> replyEntities = replyEntityPage.getList();
         return R.ok().put("discuss", replyEntities);
     }
@@ -143,7 +148,7 @@ public class ReplyController {
     @ApiImplicitParam(name = "id", value = "回复id", required = true)
     public R like(@PathVariable Integer id) {
         ReplyEntity replyEntity = replyService.getById(id);
-        replyEntity.setLikeNum(replyEntity.getLikeNum()+1);;
+        replyEntity.setLikeNum(replyEntity.getLikeNum()+1);
         replyService.updateById(replyEntity);
         return R.ok();
     }

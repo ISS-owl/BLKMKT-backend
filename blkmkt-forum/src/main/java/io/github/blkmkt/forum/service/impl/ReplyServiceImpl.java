@@ -51,7 +51,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyDao, ReplyEntity> impleme
         }
         IPage<ReplyEntity> page = this.page(
             new Query<ReplyEntity>().getPage(param),
-            new QueryWrapper<ReplyEntity>().eq("first_id",firstid)
+            new QueryWrapper<ReplyEntity>().eq("first_id",firstid).or().eq("id",firstid)
         );
         return new PageUtils<>(page);
     }
