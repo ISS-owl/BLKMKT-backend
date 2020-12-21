@@ -2,20 +2,36 @@ server:
     port: 8000
 
 spring:
-    application:
-        name: blkmkt-order
-    cloud:
-        nacos:
-            discovery:
-                server-addr: 39.101.64.188:8848
-    datasource:
-        username: root
-        password: root
-        url: jdbc:mysql://39.101.64.188:3306/blkmkt_order?useUnicode=true&characterEncoding=utf8
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: blkmkt-order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.101.64.188:8848
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://39.101.64.188:3306/blkmkt_order?useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 39.101.64.188
+  rabbitmq:
+    host: 39.101.64.188
+    username: admin
+    password: admin
+    listener:
+      simple:
+        acknowledge-mode: manual
+    virtual-host: /
+
+blkmkt:
+  thread:
+    corePoolSize: 10
+    maxPoolSize: 20
+    keepAliveTime: 300
 
 mybatis-plus:
-    mapper-locations: classpath:/mapper/**/*.xml
-    global-config:
-        db-config:
-            id-type: auto
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto

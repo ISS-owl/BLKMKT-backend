@@ -16,6 +16,9 @@ public enum BizCodeEnum {
     PRODUCT_UP_EXCEPTION(13000, "商品上架失败"),
     PRODUCT_UPDATE_EXCEPTION(13001, "上架商品更新失败"),
     PRODUCT_DELETE_EXCEPTION(13002, "删除上架商品失败"),
+    // Order
+    ORDER_NUM_NOT_ENOUGH(14000, "商品库存不足"),
+    ORDER_DUPLICATE_SUBMIT_EXCEPTION(14001, "订单重复提交错误！"),
     // Unknown
     UNKNOWN_ERROR(100000, "未知错误");
 

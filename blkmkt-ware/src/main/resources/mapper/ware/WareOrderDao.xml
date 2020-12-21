@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.github.blkmkt.ware.dao.WareOrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.github.blkmkt.ware.entity.WareOrderEntity" id="wareOrderMap">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="goodId" column="good_id"/>
+        <result property="goodNum" column="good_num"/>
+        <result property="lockStatus" column="lock_status"/>
+    </resultMap>
+
+    <select id="hasStock" resultType="java.lang.Integer">
+        SELECT `id` FROM  ware_good
+        WHERE `good_id`=#{goodId} AND `stock_num` - `stock_locked` >= #{goodNum}
+    </select>
+
+    <update id="lockStock">
+        UPDATE ware_good
+        SET `stock_locked`=`stock_locked` + #{goodNum}
+        WHERE `good_id`=#{goodId}
+        AND `stock_num` - `stock_locked` > #{goodNum}
+    </update>
+
+    <update id="unlockStock">
+        UPDATE ware_good
+        SET `stock_locked`=`stock_locked` - #{goodNum}
+        WHERE `good_id`=#{goodId}
+    </update>
+
+</mapper>

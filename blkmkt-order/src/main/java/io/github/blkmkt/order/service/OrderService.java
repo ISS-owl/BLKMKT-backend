@@ -16,5 +16,7 @@ import io.github.blkmkt.order.entity.OrderEntity;
 public interface OrderService extends IService<OrderEntity> {
 
     PageUtils<OrderEntity> queryPage(PageParam params);
+
+    void closeOrder(OrderEntity orderEntity);
 }
 

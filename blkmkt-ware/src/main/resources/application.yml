@@ -1,9 +1,9 @@
 server:
-  port: 7000
+  port: 12000
 
 spring:
   application:
-    name: blkmkt-product
+    name: blkmkt-ware
   cloud:
     nacos:
       discovery:
@@ -11,8 +11,18 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://39.101.64.188:3306/blkmkt_good?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://39.101.64.188:3306/blkmkt_ware?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: 39.101.64.188
+    username: admin
+    password: admin
+    listener:
+      simple:
+        acknowledge-mode: manual
+    virtual-host: /
+
+
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
