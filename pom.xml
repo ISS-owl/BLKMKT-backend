@@ -17,6 +17,7 @@
     <modules>
         <module>blkmkt-auth-server</module>
         <module>blkmkt-gateway</module>
+        <module>blkmkt-third-party</module>
         <module>blkmkt-common</module>
         <module>blkmkt-search</module>
         <module>blkmkt-good</module>
