@@ -22,6 +22,7 @@
         <module>blkmkt-search</module>
 		<module>blkmkt-forum</module>
         <module>blkmkt-good</module>
+        <module>blkmkt-ware</module>
         <module>blkmkt-order</module>
         <module>blkmkt-user</module>
         <module>renren-fast</module>
