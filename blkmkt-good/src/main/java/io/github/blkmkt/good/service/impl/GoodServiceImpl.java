@@ -48,8 +48,10 @@ public class GoodServiceImpl extends ServiceImpl<GoodDao, GoodEntity> implements
         GoodModel goodModel = new GoodModel();
         BeanUtils.copyProperties(good, goodModel);
         // 不同的属性
-        Integer hasStock = good.getCurrentNum() > 0? 1 : 0;
-        goodModel.setHasStock(hasStock);
+        if (good.getCurrentNum() != null) {
+            Integer hasStock = good.getCurrentNum() > 0? 1 : 0;
+            goodModel.setHasStock(hasStock);
+        }
         // 远程调用elasticsearch进行保存
         return elasticFeignService.save(Collections.singletonList(goodModel));
     }
