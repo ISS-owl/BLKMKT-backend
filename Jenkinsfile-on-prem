@@ -6,10 +6,6 @@ pipeline {
     }
 
     environment {
-        // Github
-        GITHUB_URL = 'https://github.com/ISS-owl/BLKMKT-backend'
-        GITHUB_ACCOUNT = 'Sh-Zh-7'
-        GITHUB_CREDENTIALS_ID = '9b65400f-488f-4f79-88e9-1754f2b85c4c'
         // Sonarcube
         SONAR_CREDENTIAL_ID = 'sonar-token'
         BRANCH_NAME = 'main'
@@ -29,19 +25,9 @@ pipeline {
     stages {
         stage('pull code') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
-                    submoduleCfg: [],
-                    userRemoteConfigs: [
-                        [
-                            credentialsId: "${GITHUB_CREDENTIALS_ID}",
-                            url: "${GITHUB_URL}"
-                        ]
-                    ]
-                ])
+	            git branch: 'main',
+	            credentialsId: 'blkmkt-jenkins-private-key',
+	            url: 'git@github.com:ISS-owl/BLKMKT-backend.git'
             }
         }
 
