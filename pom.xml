@@ -20,6 +20,7 @@
         <module>blkmkt-third-party</module>
         <module>blkmkt-common</module>
         <module>blkmkt-search</module>
+		<module>blkmkt-forum</module>
         <module>blkmkt-good</module>
         <module>blkmkt-order</module>
         <module>blkmkt-user</module>
