@@ -2,7 +2,9 @@ package io.github.blkmkt.user.controller;
 
 import io.github.blkmkt.user.entity.UserEntity;
 import io.github.blkmkt.user.service.UserService;
+import io.github.blkmkt.user.vo.PasswordVo;
 import io.github.common.entity.PageParam;
+import io.github.common.exception.BizCodeEnum;
 import io.github.common.utils.PageUtils;
 import io.github.common.utils.R;
 import io.swagger.annotations.Api;
@@ -59,9 +61,14 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "id", required = true)
     public R info(@PathVariable("id") Integer id){
 		UserEntity user = userService.getById(id);
-		user.setPassword("");   // 防止看到密码
+		if (user != null) {
+            // 禁止返回密码
+            user.setPassword("");
+            return R.ok().put("user", user);
+        } else {
+		    return R.error(BizCodeEnum.USER_NOT_EXIST.getCode(), BizCodeEnum.USER_NOT_EXIST.getMsg());
+        }
 
-        return R.ok().put("user", user);
     }
 
     /**
@@ -97,6 +104,34 @@ public class UserController {
 		userService.updateById(user);
 
         return R.ok();
+    }
+
+    /**
+     * 更新密码
+     */
+    @PutMapping("/password")
+    @ApiOperation(value = "更新密码", notes = "更新密码")
+    @ApiImplicitParam(name = "passwordVo", value = "新旧密码实体", required = true)
+    public R updatePassword(@RequestBody PasswordVo passwordVo) {
+        UserEntity userEntity = this.userService.getById(passwordVo.getId());
+        // 用户是否存在
+        if (userEntity != null) {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            boolean matches = bCryptPasswordEncoder.matches(passwordVo.getOldPassword(), userEntity.getPassword());
+            // 旧密码和新密码是否匹配
+            if (matches) {
+                String encodePassword = bCryptPasswordEncoder.encode(userEntity.getPassword());
+                userEntity.setPassword(encodePassword);
+                userService.updateById(userEntity);
+
+                return R.ok();
+            } else {
+                return R.error(BizCodeEnum.USER_PASSWORD_NOT_CORRECT.getCode(), BizCodeEnum.USER_PASSWORD_NOT_CORRECT.getMsg());
+            }
+        } else {
+            return R.error(BizCodeEnum.USER_NOT_EXIST.getCode(), BizCodeEnum.USER_NOT_EXIST.getMsg());
+        }
+
     }
 
     /**

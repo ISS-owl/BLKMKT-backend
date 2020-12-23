@@ -19,6 +19,9 @@ public enum BizCodeEnum {
     // Order
     ORDER_NUM_NOT_ENOUGH(14000, "商品库存不足"),
     ORDER_DUPLICATE_SUBMIT_EXCEPTION(14001, "订单重复提交错误！"),
+    // User
+    USER_PASSWORD_NOT_CORRECT(15000, "用户密码错误"),
+    USER_NOT_EXIST(15001, "用户不存在"),
     // Unknown
     UNKNOWN_ERROR(100000, "未知错误");
 
