@@ -41,7 +41,7 @@ pipeline {
         stage('remove old container and image') {
             steps {
                sh 'docker rm -f $(docker ps -a | grep "$PROJECT_NAME" | awk "{print $1}") || true'
-               sh 'docker rmi -f $PROJECT_NAME || true'
+               sh 'docker rmi -f $PROJECT_NAME:SNAPSHOT || true'
             }
         }
 
