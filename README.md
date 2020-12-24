@@ -10,23 +10,23 @@
 
 **Spring Cloud + Spring Cloud Alibaba**
 
-**SSM:** Springboot + Mybatis-plus(Query builder) </br>
-**Database:** Mysql(Navicat as client) + Redis(Redis Desktop Manager as client) </br>
-**Documentation:** Swagger + Open API + Spring Fox </br>
-**Service Registration & Service Configuration:** Nacos </br>
-**Gateway:** Spring Cloud Gateway </br>
-**RPC:** Spring Cloud Open Feign </br>
-**Authentication:**  JWT + Spring Security(Todo) </br>
-**Validation:** Hibernate validator </br>
-**Search:** ElasticSearch powered by lucene + Kibana </br>
-**AMQP:** Rabbit mq </br>
-**Transaction Manager:** Seata </br>
-**Flow Control:** Sentinel </br>
-**Tracing:** Zipkin </br>
-**Depolyment:** Maven + Docker + Docker Compose + Jenkins + k8s + kubesphere(installation by kubekey). </br>
-**Tools:** Postman(HTTP client) + XShell(SSH and FTP client) </br>
-**Cloud:** ECS + SLB + OSS + SMS from Alibaba Cloud </br>
-**Utils:** renren-fast + renren-generator(CRUD auto-gen) + Lombok </br>
+- **SSM:** Springboot + Mybatis-plus(Query builder) </br>
+- **Database:** Mysql(Navicat as client) + Redis(Redis Desktop Manager as client) </br>
+- **Documentation:** Swagger + Open API + Spring Fox </br>
+- **Service Registration & Service Configuration:** Nacos </br>
+- **Gateway:** Spring Cloud Gateway </br>
+- **RPC:** Spring Cloud Open Feign </br>
+- **Authentication:**  JWT + Spring Security(Todo) </br>
+- **Validation:** Hibernate validator </br>
+- **Search:** ElasticSearch powered by lucene + Kibana </br>
+- **AMQP:** Rabbit mq </br>
+- **Transaction Manager:** Seata </br>
+- **Flow Control:** Sentinel </br>
+- **Tracing:** Zipkin </br>
+- **Depolyment:** Maven + Docker + Docker Compose + Jenkins + k8s + kubesphere(installation by kubekey). </br>
+- **Tools:** Postman(HTTP client) + XShell(SSH and FTP client) </br>
+- **Cloud:** ECS + SLB + OSS + SMS from Alibaba Cloud </br>
+- **Utils:** renren-fast + renren-generator(CRUD auto-gen) + Lombok </br>
 
 
 
@@ -70,3 +70,11 @@
         </td>
     </tr>
 </table>
+
+
+## License
+
+[MIT License](LICENSE)
+
+Copyright ©  2020 ISS-OWL-team
+
