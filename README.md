@@ -41,19 +41,9 @@
 - **Cloud:** ECS + SLB + OSS + SMS from Alibaba Cloud </br>
 - **Utils:** renren-fast + renren-generator(CRUD auto-gen) + Lombok </br>
 
+# Architecture(Simplified)
 
-
-# Contributing
-
-Before you want to join our developers team, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
-
-### Code of Conduct
-
-Help us keep our community open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
-
-### Issue or Pull Request
-
-Please follow our issue and pull request template when contributing.
+![](/resources/assets/architecture.png)
 
 
 
@@ -114,7 +104,17 @@ Please follow our issue and pull request template when contributing.
         </td>
     </tr>
 </table>
+# Contributing
 
+Before you want to join our developers team, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
+
+### Code of Conduct
+
+Help us keep our community open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
+
+### Issue or Pull Request
+
+Please follow our issue and pull request template when contributing.
 
 
 # License
