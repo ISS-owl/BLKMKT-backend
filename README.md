@@ -36,7 +36,7 @@ Before you want to join our developer teams, you need to fully read our [documen
 
 ### Code of Conduct
 
-Help us keep Angular open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
+Help us keep our community open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
 
 ### Issue or Pull Request
 
