@@ -43,9 +43,19 @@
 
 # Architecture(Simplified)
 
-![](/resources/assets/architecture.png)
+<p align=center><img src="/resources/assets/architecture.png" width=600 height=400></p>
 
+# Contributing
 
+Before you want to join our developers team, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
+
+### Code of Conduct
+
+Help us keep our community open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
+
+### Issue or Pull Request
+
+Please follow our issue and pull request template when contributing.
 
 # Core team
 
@@ -104,18 +114,6 @@
         </td>
     </tr>
 </table>
-# Contributing
-
-Before you want to join our developers team, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
-
-### Code of Conduct
-
-Help us keep our community open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
-
-### Issue or Pull Request
-
-Please follow our issue and pull request template when contributing.
-
 
 # License
 
