@@ -28,6 +28,7 @@
 - **Service Registration & Service Configuration:** Nacos </br>
 - **Gateway:** Spring Cloud Gateway </br>
 - **RPC:** Spring Cloud Open Feign </br>
+- **Cache:** Spring Cache </br>
 - **Authentication:**  JWT + Spring Security(Todo) </br>
 - **Validation:** Hibernate validator </br>
 - **Search:** ElasticSearch powered by lucene + Kibana </br>
