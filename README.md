@@ -6,6 +6,20 @@
 
 <p align="center"><i>The backend of the website version of black market in WHU ISS</i></p>
 
+<p align="center">
+    <a href="https://github.com/ISS-owl/BLKMKT-backend/issues" style="text-decoration:none" >
+        <img src="https://img.shields.io/github/issues/ISS-owl/BLKMKT-backend?color=orange" alt="issues"/>
+    </a>
+    <a href="https://github.com/ISS-owl/BLKMKT-backend" style="text-decoration:none" >
+        <img src="https://img.shields.io/github/repo-size/ISS-owl/BLKMKT-backend" alt="Size"/>
+    </a>
+  <a href="https://github.com/ISS-owl/BLKMKT-backend/blob/master/LICENSE" style="text-decoration:none">
+        <img src="https://img.shields.io/github/license/ISS-owl/BLKMKT-backend" alt="license"/>
+    </a>
+</p>
+
+</br>
+
 # Technology stack
 
 **Spring Cloud + Spring Cloud Alibaba**
