@@ -1,9 +1,9 @@
-package io.github.issowl.search.vo;
+package io.github.common.to.es;
 
 import lombok.Data;
 
 @Data
-public class SearchParam {
+public class GoodSearchParam {
     // 匹配字段
     private String keyword;
 

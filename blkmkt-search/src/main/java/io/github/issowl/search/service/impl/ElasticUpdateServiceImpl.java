@@ -1,8 +1,8 @@
 package io.github.issowl.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import io.github.common.to.es.model.GoodModel;
 import io.github.issowl.search.service.ElasticUpdateService;
-import io.github.issowl.search.vo.model.GoodModel;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.update.UpdateRequest;

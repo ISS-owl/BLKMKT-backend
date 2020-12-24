@@ -1,11 +1,11 @@
 package io.github.issowl.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import io.github.common.to.es.GoodSearchParam;
+import io.github.common.to.es.GoodSearchResult;
+import io.github.common.to.es.model.GoodModel;
 import io.github.issowl.search.config.ElasticSearchConfig;
 import io.github.issowl.search.service.ElasticSearchService;
-import io.github.issowl.search.vo.SearchParam;
-import io.github.issowl.search.vo.SearchResult;
-import io.github.issowl.search.vo.model.GoodModel;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -32,8 +32,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private RestHighLevelClient restHighLevelClient;
 
     @Override
-    public SearchResult getSearchResult(SearchParam searchParam) {
-        SearchResult searchResult= null;
+    public GoodSearchResult getSearchResult(GoodSearchParam searchParam) {
+        GoodSearchResult searchResult= null;
         SearchRequest request = buildSearchRequest(searchParam);
         try {
             SearchResponse searchResponse = restHighLevelClient.search(request, ElasticSearchConfig.COMMON_OPTIONS);
@@ -44,7 +44,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         return searchResult;
     }
 
-    private SearchRequest buildSearchRequest(SearchParam searchParam) {
+    private SearchRequest buildSearchRequest(GoodSearchParam searchParam) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         // 用Bool创建多个条件
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
@@ -104,8 +104,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         return new SearchRequest(new String[]{"goods"}, searchSourceBuilder);
     }
 
-    private SearchResult buildSearchResult(SearchParam searchParam, SearchResponse searchResponse) {
-        SearchResult searchResult = new SearchResult();
+    private GoodSearchResult buildSearchResult(GoodSearchParam searchParam, SearchResponse searchResponse) {
+        GoodSearchResult searchResult = new GoodSearchResult();
         SearchHits hits = searchResponse.getHits();
 
         // 设置商品信息

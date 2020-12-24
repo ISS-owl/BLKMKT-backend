@@ -1,8 +1,9 @@
 package io.github.issowl.search.service;
 
-import io.github.issowl.search.vo.SearchParam;
-import io.github.issowl.search.vo.SearchResult;
+
+import io.github.common.to.es.GoodSearchParam;
+import io.github.common.to.es.GoodSearchResult;
 
 public interface ElasticSearchService {
-    SearchResult getSearchResult(SearchParam searchParam);
+    GoodSearchResult getSearchResult(GoodSearchParam searchParam);
 }

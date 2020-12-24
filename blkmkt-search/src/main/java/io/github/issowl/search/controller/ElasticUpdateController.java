@@ -1,9 +1,9 @@
 package io.github.issowl.search.controller;
 
 import io.github.common.exception.BizCodeEnum;
+import io.github.common.to.es.model.GoodModel;
 import io.github.common.utils.R;
 import io.github.issowl.search.service.ElasticUpdateService;
-import io.github.issowl.search.vo.model.GoodModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;

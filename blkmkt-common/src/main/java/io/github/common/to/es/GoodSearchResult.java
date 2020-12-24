@@ -1,12 +1,12 @@
-package io.github.issowl.search.vo;
+package io.github.common.to.es;
 
-import io.github.issowl.search.vo.model.GoodModel;
+import io.github.common.to.es.model.GoodModel;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class SearchResult {
+public class GoodSearchResult {
     private List<GoodModel> goodModelList;
 
     private Long total;

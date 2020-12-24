@@ -1,8 +1,10 @@
 package io.github.blkmkt.good.controller;
 
 import io.github.blkmkt.good.entity.GoodEntity;
+import io.github.blkmkt.good.feign.ElasticFeignService;
 import io.github.blkmkt.good.service.GoodService;
 import io.github.common.entity.PageParam;
+import io.github.common.to.es.GoodSearchParam;
 import io.github.common.utils.PageUtils;
 import io.github.common.utils.R;
 import io.swagger.annotations.Api;
@@ -29,6 +31,9 @@ import java.util.Date;
 public class GoodController {
     @Autowired
     private GoodService goodService;
+
+    @Autowired
+    private ElasticFeignService elasticFeignService;
 
     /**
      * 信息
@@ -61,6 +66,15 @@ public class GoodController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 检索商品
+     */
+    @GetMapping("/search")
+    @ApiOperation(value = "检索商品", notes = "根据传入的模式检索商品")
+    @ApiImplicitParam(name = "searchParam", value = "检索参数", required = true)
+    public R searchGood(GoodSearchParam searchParam) {
+        return elasticFeignService.search(searchParam);
+    }
 
     /**
      * 查看商品

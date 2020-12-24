@@ -1,4 +1,4 @@
-package io.github.issowl.search.vo.model;
+package io.github.common.to.es.model;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
