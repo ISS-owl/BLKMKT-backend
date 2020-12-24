@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("thirdparty")
 public class OssController {
     @Autowired
     private OSS ossClient;

@@ -7,7 +7,7 @@ spring:
           predicates:
             - Path=/api/thirdparty/**
           filters:
-            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
 
 
         - id: auth_server_route
