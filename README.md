@@ -46,11 +46,11 @@
 
 # Contributing
 
-Before you want to join our developer teams, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
+Before you want to join our developers team, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
 
 ### Code of Conduct
 
-Help us keep Angular open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
+Help us keep our community open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
 
 ### Issue or Pull Request
 
@@ -126,5 +126,5 @@ Copyright ©  2020 [ISS-owl team](https://github.com/ISS-owl)
 
 -----
 
-**Love our project? Give our repo a star :star: :arrow_up:.**
+<p align="center"><b>Love our project? Give our repo a star :star: :arrow_up:.</b></p>
 
