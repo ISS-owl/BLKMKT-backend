@@ -50,7 +50,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
         // bool must
         if (!StringUtils.isEmpty(searchParam.getKeyword())) {
-            boolQueryBuilder.must(QueryBuilders.matchQuery("title", searchParam.getKeyword()));
+            boolQueryBuilder.must(
+                QueryBuilders
+                    .matchQuery("title", searchParam.getKeyword())
+                    .analyzer("ik_smart")       // 指定分词器
+            );
         }
         // bool filters
         if (searchParam.getGtype() != null) {
