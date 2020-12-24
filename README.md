@@ -112,5 +112,5 @@ Copyright ©  2020 [ISS-owl team](https://github.com/ISS-owl)
 
 -----
 
-**Love our project? Give our repo a star :star: :arrow_up:.**
+<p align="center"><b>Love our project? Give our repo a star :star: :arrow_up:.</b></p>
 
