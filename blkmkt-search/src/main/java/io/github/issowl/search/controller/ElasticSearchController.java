@@ -19,7 +19,6 @@ public class ElasticSearchController {
 
     @GetMapping(value = "/good")
     public R search(@RequestParam String searchParamString) {
-        System.out.println(searchParamString);
         GoodSearchParam searchParam = JSON.parseObject(searchParamString, GoodSearchParam.class);
         GoodSearchResult searchResult = elasticSearchService.getSearchResult(searchParam);
         return R.ok().put("data", searchResult);
