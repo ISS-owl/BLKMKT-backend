@@ -18,8 +18,6 @@
     </a>
 </p>
 
-</br>
-
 # Technology stack
 
 **Spring Cloud + Spring Cloud Alibaba**
