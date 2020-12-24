@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(value = "blkmkt-search")
+@FeignClient(value = "blkmkt-search", url = "http://39.101.64.188:12000")
 public interface ElasticFeignService {
     @PostMapping("es/save/good")
     R save(@RequestBody List<GoodModel> goodModels);
