@@ -6,7 +6,7 @@
 
 <p align="center"><B>The backend of the website version of black market in WHU ISS</B></p>
 
-## Technology stack
+# Technology stack
 
 **Spring Cloud + Spring Cloud Alibaba**
 
@@ -30,7 +30,7 @@
 
 
 
-## Core team
+# Core team
 
 <table>
     <tr>
@@ -68,13 +68,30 @@
                 /></a>
             </div>
         </td>
+              <td align="center">
+            <a href="https://github.com/intchar-hub"
+                ><img
+                    src="https://github.com/intchar-hub.png?size=100"
+                    width="100"
+                    style="margin-bottom: -4px; border-radius: 8px;"
+                    alt="Xiaoyu Kou"
+                /><br /><sub><b>Xiaoyu Kou</b></sub></a
+            >
+            <div style="margin-top: 4px">
+                <a href="https://github.com/intchar-hub" title="Github"
+                    ><img
+                        width="16"
+                        src="https://image.flaticon.com/icons/svg/2111/2111425.svg"
+                /></a>
+            </div>
+        </td>
     </tr>
 </table>
 
 
-## License
+# License
 
 [MIT License](LICENSE)
 
-Copyright ©  2020 ISS-OWL-team
+Copyright ©  2020 [ISS-owl team](https://github.com/ISS-owl)
 
