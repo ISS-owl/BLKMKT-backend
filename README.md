@@ -32,7 +32,7 @@
 
 # Contributing
 
-Before you want to join our developer teams, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
+Before you want to join our developers team, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
 
 ### Code of Conduct
 
