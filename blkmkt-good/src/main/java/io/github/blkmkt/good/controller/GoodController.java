@@ -1,5 +1,6 @@
 package io.github.blkmkt.good.controller;
 
+import com.alibaba.fastjson.JSON;
 import io.github.blkmkt.good.entity.GoodEntity;
 import io.github.blkmkt.good.feign.ElasticFeignService;
 import io.github.blkmkt.good.service.GoodService;
@@ -73,7 +74,9 @@ public class GoodController {
     @ApiOperation(value = "检索商品", notes = "根据传入的模式检索商品")
     @ApiImplicitParam(name = "searchParam", value = "检索参数", required = true)
     public R searchGood(GoodSearchParam searchParam) {
-        return elasticFeignService.search(searchParam);
+        System.out.println(searchParam);
+        String searchParamString = JSON.toJSONString(searchParam);
+        return elasticFeignService.search(searchParamString);
     }
 
     /**

@@ -20,5 +20,5 @@ public interface ElasticFeignService {
     R delete(@RequestBody List<Integer> ids);
 
     @GetMapping(value = "es/search/good")
-    R search(GoodSearchParam searchParam);
+    R search(@RequestParam String searchParamString);
 }
