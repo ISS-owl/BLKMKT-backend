@@ -4,7 +4,7 @@
 
 <h1 align="center">BLKMKT backend</h1>
 
-<p align="center"><B>The backend of the website version of black market in WHU ISS</B></p>
+<p align="center"><i>The backend of the website version of black market in WHU ISS</i></p>
 
 # Technology stack
 
@@ -27,6 +27,20 @@
 - **Tools:** Postman(HTTP client) + XShell(SSH and FTP client) </br>
 - **Cloud:** ECS + SLB + OSS + SMS from Alibaba Cloud </br>
 - **Utils:** renren-fast + renren-generator(CRUD auto-gen) + Lombok </br>
+
+
+
+# Contributing
+
+Before you want to join our developer teams, you need to fully read our [documentation](https://github.com/ISS-owl/BLKMKT-document).
+
+### Code of Conduct
+
+Help us keep Angular open and inclusive. Please read and follow our [Code of Conduct](https://github.com/ISS-owl/BLKMKT-document/blob/main/CODE_OF_CONDUCT.md).
+
+### Issue or Pull Request
+
+Please follow our issue and pull request template when contributing.
 
 
 
@@ -89,9 +103,14 @@
 </table>
 
 
+
 # License
 
 [MIT License](LICENSE)
 
 Copyright ©  2020 [ISS-owl team](https://github.com/ISS-owl)
+
+-----
+
+**Love our project? Give our repo a star :star: :arrow_up:.**
 
