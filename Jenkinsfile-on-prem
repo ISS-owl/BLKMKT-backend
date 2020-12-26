@@ -6,14 +6,7 @@ pipeline {
     }
 
     environment {
-        // Sonarcube
-        SONAR_CREDENTIAL_ID = 'sonar-token'
-        BRANCH_NAME = 'main'
-        // Aliyun docker registry
-        ALIYUN_USERNAME = 'shzh7'
-        ALIYUN_REGISTRY = 'registry.cn-wulanchabu.aliyuncs.com'
-        ALIYUN_NAMESPACE = 'blkmkt'
-
+        // Empty environment variables list
     }
 
     parameters {
