@@ -41,6 +41,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!-- OpenFeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -52,7 +56,6 @@
             <artifactId>java-jwt</artifactId>
             <version>3.10.3</version>
         </dependency>
-
         <!-- Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
