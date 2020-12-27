@@ -13,10 +13,11 @@
     <a href="https://github.com/ISS-owl/BLKMKT-backend" style="text-decoration:none" >
         <img src="https://img.shields.io/github/repo-size/ISS-owl/BLKMKT-backend" alt="Size"/>
     </a>
-  <a href="https://github.com/ISS-owl/BLKMKT-backend/blob/master/LICENSE" style="text-decoration:none">
+  <a href="https://github.com/ISS-owl/BLKMKT-backend/blob/main/LICENSE" style="text-decoration:none">
         <img src="https://img.shields.io/github/license/ISS-owl/BLKMKT-backend" alt="license"/>
     </a>
 </p>
+
 
 # Technology stack
 
